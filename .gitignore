@@ -11,6 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+
+# Mockups and Design Files
+pundo_UI/
 
 # Editor directories and files
 .vscode/*
