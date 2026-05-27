@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Prudence Modern Finance</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#3fd298",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#444653",
+                        "surface": "#f8f9ff",
+                        "primary": "#00288e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#003d27",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#173bab",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container": "#e5eeff",
+                        "primary-container": "#1e40af",
+                        "on-secondary-fixed": "#191c1e",
+                        "on-secondary-container": "#626567",
+                        "background": "#f8f9ff",
+                        "secondary-fixed": "#e0e3e5",
+                        "outline": "#757684",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-container": "#e0e3e5",
+                        "secondary": "#5c5f61",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-tint": "#3755c3",
+                        "on-tertiary-fixed": "#002113",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-fixed": "#001453",
+                        "on-background": "#0b1c30",
+                        "surface-variant": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "outline-variant": "#c4c5d5",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#00563a",
+                        "inverse-primary": "#b8c4ff",
+                        "on-primary-container": "#a8b8ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#4edea3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "headline-sm": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "data-mono": ["JetBrains Mono", "monospace"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex">
+<!-- Mobile Top NavBar -->
+<nav class="md:hidden w-full h-16 sticky top-0 z-40 bg-surface-container-lowest shadow-sm flex justify-between items-center px-margin-mobile ml-auto">
+<div class="flex items-center space-x-3">
+<span class="font-headline-md text-headline-md font-bold text-primary">Pundo</span>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 active:scale-95 transition-transform rounded-full p-2">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 active:scale-95 transition-transform rounded-full p-2">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</nav>
+<!-- Desktop Side NavBar -->
+<nav class="hidden md:flex fixed left-0 top-0 h-screen w-64 z-50 bg-surface-container-lowest shadow-sm flex-col py-8 px-4">
+<div class="flex items-center space-x-3 px-4 mb-10">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary font-bold text-xl">P</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Pundo</h1>
+<p class="font-label-md text-label-md text-secondary">Wealth Overview</p>
+</div>
+</div>
+<ul class="space-y-2 flex-1">
+<li>
+<a class="text-secondary flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-surface-container-high transition-all cursor-pointer active:opacity-80 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="text-secondary flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-surface-container-high transition-all cursor-pointer active:opacity-80 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Transactions</span>
+</a>
+</li>
+<li>
+<a class="text-secondary flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-surface-container-high transition-all cursor-pointer active:opacity-80 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">track_changes</span>
+<span>Goals</span>
+</a>
+</li>
+<li>
+<a class="bg-primary-container text-on-primary-container flex items-center space-x-3 px-4 py-3 rounded-xl cursor-pointer active:opacity-80 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-2">
+<button class="w-full bg-primary text-on-primary rounded-xl py-3 px-4 flex items-center justify-center space-x-2 hover:bg-primary/90 transition-colors shadow-sm font-label-md text-label-md">
+<span class="material-symbols-outlined">add</span>
+<span>Add Transaction</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 w-full bg-background flex flex-col min-h-screen">
+<!-- Page Header -->
+<header class="px-margin-mobile md:px-margin-desktop py-10 md:py-12 max-w-container-max mx-auto w-full">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Settings</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage your account preferences, security, and notifications.</p>
+</header>
+<!-- Settings Layout Grid -->
+<div class="px-margin-mobile md:px-margin-desktop pb-20 max-w-container-max mx-auto w-full flex flex-col lg:flex-row gap-8 lg:gap-12">
+<!-- Left Column: Page-Level Vertical Nav -->
+<aside class="w-full lg:w-64 flex-shrink-0">
+<nav class="sticky top-24 bg-surface-container-lowest rounded-xl shadow-sm p-3">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-surface-container-low text-primary font-body-md text-body-md font-medium transition-colors" href="#profile">
+<span class="material-symbols-outlined">person</span>
+<span>Profile</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-body-md text-body-md" href="#security">
+<span class="material-symbols-outlined">shield_lock</span>
+<span>Security</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-body-md text-body-md" href="#notifications">
+<span class="material-symbols-outlined">notifications_active</span>
+<span>Notifications</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-body-md text-body-md" href="#preferences">
+<span class="material-symbols-outlined">tune</span>
+<span>Preferences</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+<!-- Right Column: Settings Content Cards -->
+<div class="flex-1 space-y-8">
+<!-- Profile Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_2px_8px_rgba(0,40,142,0.04)] p-6 md:p-8 border border-outline-variant/30" id="profile">
+<div class="mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Profile Information</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Update your personal details and public profile.</p>
+</div>
+<div class="flex flex-col md:flex-row gap-8 items-start mb-8">
+<div class="flex flex-col items-center space-y-4">
+<div class="w-24 h-24 rounded-full bg-surface-container-high border-4 border-surface overflow-hidden relative group cursor-pointer">
+<!-- Placeholder Image -->
+<div class="w-full h-full bg-surface-tint opacity-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary">person</span>
+</div>
+<div class="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors">Change Picture</button>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Full Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="Jane Doe"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Email Address</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="email" value="jane.doe@example.com"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Phone Number</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="tel" value="+1 (555) 123-4567"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Security Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_2px_8px_rgba(0,40,142,0.04)] p-6 md:p-8 border border-outline-variant/30" id="security">
+<div class="mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Security</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage your password and authentication settings.</p>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-outline-variant/30">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Current Password</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" placeholder="••••••••" type="password"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">New Password</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" placeholder="Enter new password" type="password"/>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium">Two-Factor Authentication (2FA)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-md">Add an extra layer of security to your account by requiring a code from your authenticator app.</p>
+</div>
+<button aria-checked="false" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-secondary-fixed transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" role="switch" type="button">
+<span class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium mb-4">Login History</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">desktop_windows</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Chrome on macOS</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">San Francisco, USA • Active now</p>
+</div>
+</div>
+<span class="font-label-md text-label-md text-tertiary-container bg-tertiary/10 px-2 py-1 rounded">Current Session</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-on-surface-variant">smartphone</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">iPhone 13</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">New York, USA • 2 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium">Sessions</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage your active sessions on other devices.</p>
+</div>
+<button class="px-4 py-2 rounded-lg border border-error text-error font-label-md text-label-md hover:bg-error/5 transition-colors">
+            Log out of all other devices
+        </button>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-medium">App-specific passwords</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Generate unique passwords for third-party integrations.</p>
+</div>
+<button class="px-4 py-2 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md hover:bg-surface-container-highest transition-colors">
+            Manage Passwords
+        </button>
+</div>
+</div></div>
+</section>
+<!-- Notifications Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_2px_8px_rgba(0,40,142,0.04)] p-6 md:p-8 border border-outline-variant/30" id="notifications">
+<div class="mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Notifications</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Choose how you want to be alerted about account activity.</p>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between pb-6 border-b border-outline-variant/30">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium">Email Notifications</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Receive daily summaries and critical alerts via email.</p>
+</div>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="flex items-center justify-between pb-6 border-b border-outline-variant/30">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">sms</span>
+</div>
+<div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium">SMS Alerts</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Get instant text messages for unusual login attempts.</p>
+</div>
+</div>
+<button aria-checked="false" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-secondary-fixed transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">smartphone</span>
+</div>
+<div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium">Push Notifications</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time alerts sent directly to your mobile device.</p>
+</div>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-primary transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Preferences Section -->
+<section class="bg-surface-container-lowest rounded-xl shadow-[0_2px_8px_rgba(0,40,142,0.04)] p-6 md:p-8 border border-outline-variant/30" id="preferences">
+<div class="mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Preferences</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Customize your localization and viewing options.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Language</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow">
+<option>English (United States)</option>
+<option>Spanish (Spain)</option>
+<option>French (France)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Base Currency</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow">
+<option>USD ($) - US Dollar</option>
+<option>EUR (€) - Euro</option>
+<option>GBP (£) - British Pound</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end space-x-4 pt-6 border-t border-outline-variant/30 mt-8">
+<button class="px-6 py-2.5 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                        Cancel
+                    </button>
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary/90 shadow-sm transition-colors">
+                        Save Changes
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple JS for Toggle interaction demonstration -->
+<script>
+        document.querySelectorAll('button[role="switch"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const isChecked = this.getAttribute('aria-checked') === 'true';
+                this.setAttribute('aria-checked', !isChecked);
+                
+                const span = this.querySelector('span');
+                if (!isChecked) {
+                    this.classList.remove('bg-secondary-fixed');
+                    this.classList.add('bg-primary');
+                    span.classList.remove('translate-x-0');
+                    span.classList.add('translate-x-5');
+                } else {
+                    this.classList.remove('bg-primary');
+                    this.classList.add('bg-secondary-fixed');
+                    span.classList.remove('translate-x-5');
+                    span.classList.add('translate-x-0');
+                }
+            });
+        });
+    </script>
+</body></html>

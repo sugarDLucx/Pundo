@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pundo - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#dce9ff",
+                      "on-primary-fixed-variant": "#173bab",
+                      "error-container": "#ffdad6",
+                      "on-background": "#0b1c30",
+                      "secondary-fixed-dim": "#c4c7c9",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#001453",
+                      "primary-fixed": "#dde1ff",
+                      "on-primary-container": "#a8b8ff",
+                      "inverse-surface": "#213145",
+                      "inverse-primary": "#b8c4ff",
+                      "outline": "#757684",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-secondary-fixed": "#191c1e",
+                      "tertiary": "#003d27",
+                      "on-tertiary-fixed": "#002113",
+                      "on-tertiary-container": "#3fd298",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary-container": "#1e40af",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-bright": "#f8f9ff",
+                      "secondary": "#5c5f61",
+                      "surface": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "background": "#f8f9ff",
+                      "surface-variant": "#d3e4fe",
+                      "outline-variant": "#c4c5d5",
+                      "on-secondary-container": "#626567",
+                      "secondary-container": "#e0e3e5",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "on-surface": "#0b1c30",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#e0e3e5",
+                      "surface-tint": "#3755c3",
+                      "inverse-on-surface": "#eaf1ff",
+                      "primary": "#00288e",
+                      "tertiary-container": "#00563a",
+                      "on-secondary-fixed-variant": "#444749",
+                      "on-surface-variant": "#444653",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#cbdbf5",
+                      "primary-fixed-dim": "#b8c4ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "unit": "8px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "safe": "env(safe-area-inset-bottom)"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col pb-[100px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface shadow-sm z-50 flex items-center justify-between px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD269X3G65bmNUfQrT6QZzsvBbkChMfLodmhpuyrOEwb6Om-KLUbPTuoucOjiAtUrpvbDjTubGQyt-tHXsFgH_bf8dHvf9U8NxASqWZ4rX3zgbVZbDS5Q07wMSPlz4bFMHJZx2JodYGOMkw7Bg9_kLg1HF4Yx2xOKXaAXFgf7mian61nRh-dmWwF3YYJN7bp06WeMi_M66idZukvE5pa1Vo29OxXDtVZ5HIdH6rw0l1nlCl47hLlVzbkKKL4RxBw1VomMpEzf2-7ZQ"/>
+<span class="font-headline-md text-headline-md font-bold text-primary">Pundo</span>
+</div>
+<button class="text-primary hover:bg-surface-container-low transition-colors rounded-full p-2 active:opacity-80 transition-opacity duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-20 px-margin-mobile space-y-6 max-w-container-max mx-auto w-full md:hidden">
+<!-- Welcome & Date -->
+<div class="pt-2">
+<h1 class="font-headline-md text-headline-md">Good Morning, Alex</h1>
+<p class="font-body-sm text-body-sm text-secondary">October 24, 2023</p>
+</div>
+<!-- Summary Cards (Horizontal Scroll) -->
+<div class="flex overflow-x-auto no-scrollbar snap-x snap-mandatory gap-4 -mx-margin-mobile px-margin-mobile pb-4">
+<!-- Total Balance Card -->
+<div class="snap-center shrink-0 w-[85vw] max-w-[300px] bg-primary text-on-primary rounded-xl p-6 shadow-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-[64px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<h2 class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider mb-2">Total Balance</h2>
+<p class="font-display-lg text-display-lg font-data-mono mb-4">$42,500.00</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim" data-icon="trending_up">trending_up</span>
+<span class="text-tertiary-fixed-dim">+2.4%</span>
+<span class="text-primary-fixed-dim">vs last month</span>
+</div>
+</div>
+<!-- Net Cash Flow Card -->
+<div class="snap-center shrink-0 w-[85vw] max-w-[300px] bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[64px] text-primary" data-icon="swap_vert">swap_vert</span>
+</div>
+<h2 class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2">Net Cash Flow</h2>
+<p class="font-headline-lg text-headline-lg font-data-mono mb-4 text-on-surface">+$3,240.50</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="trending_up">trending_up</span>
+<span class="text-tertiary">Healthy</span>
+</div>
+</div>
+<!-- Monthly Income Card -->
+<div class="snap-center shrink-0 w-[85vw] max-w-[300px] bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant relative overflow-hidden">
+<h2 class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2">Income</h2>
+<p class="font-headline-lg text-headline-lg font-data-mono mb-4 text-tertiary">+$8,500.00</p>
+</div>
+<!-- Monthly Expenses Card -->
+<div class="snap-center shrink-0 w-[85vw] max-w-[300px] bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant relative overflow-hidden">
+<h2 class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2">Expenses</h2>
+<p class="font-headline-lg text-headline-lg font-data-mono mb-4 text-error">-$5,259.50</p>
+</div>
+</div>
+<!-- Spending Overview Chart (Simplified visual representation) -->
+<section class="bg-surface-container-lowest rounded-xl p-gutter shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-sm text-headline-sm">Spending Overview</h2>
+<select class="bg-surface-container-low border-none text-body-sm font-body-sm rounded-lg py-1 px-2 focus:ring-primary focus:border-primary">
+<option>October</option>
+<option>September</option>
+</select>
+</div>
+<!-- Mock Chart Area -->
+<div class="h-40 flex items-end justify-between gap-2 pt-4 border-b border-outline-variant pb-2 relative">
+<div class="absolute inset-0 flex flex-col justify-between pb-2 pointer-events-none opacity-20">
+<div class="border-t border-outline border-dashed w-full"></div>
+<div class="border-t border-outline border-dashed w-full"></div>
+<div class="border-t border-outline border-dashed w-full"></div>
+</div>
+<div class="w-1/6 bg-primary-container h-[40%] rounded-t-sm relative group"><div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">Week 1</div></div>
+<div class="w-1/6 bg-primary-container h-[70%] rounded-t-sm relative group"><div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">Week 2</div></div>
+<div class="w-1/6 bg-primary h-[90%] rounded-t-sm relative group"><div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">Week 3</div></div>
+<div class="w-1/6 bg-primary-container h-[50%] rounded-t-sm relative group"><div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded">Week 4</div></div>
+</div>
+<div class="flex justify-between mt-2 font-label-md text-label-md text-secondary">
+<span>W1</span><span>W2</span><span>W3</span><span>W4</span>
+</div>
+</section>
+<!-- Financial Goals Preview -->
+<section class="bg-surface-container-lowest rounded-xl p-gutter shadow-sm">
+<h2 class="font-headline-sm text-headline-sm mb-4">Goals Progress</h2>
+<div class="space-y-4">
+<!-- Goal 1 -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md font-medium">Emergency Fund</span>
+<span class="font-data-mono text-data-mono text-secondary">75%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<!-- Goal 2 -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md font-medium">Vacation</span>
+<span class="font-data-mono text-data-mono text-secondary">30%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Transactions -->
+<section class="bg-surface-container-lowest rounded-xl p-gutter shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-sm text-headline-sm">Recent Transactions</h2>
+<a class="font-body-sm text-body-sm text-primary hover:underline" href="#">See all</a>
+</div>
+<div class="space-y-4">
+<!-- Transaction 1 -->
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high last:border-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium">Whole Foods</p>
+<p class="font-label-md text-label-md text-secondary">Groceries • Today</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono font-medium">-$124.50</span>
+</div>
+<!-- Transaction 2 -->
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high last:border-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium">Tech Corp Salary</p>
+<p class="font-label-md text-label-md text-secondary">Income • Yesterday</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono font-medium text-tertiary">+$4,250.00</span>
+</div>
+<!-- Transaction 3 -->
+<div class="flex justify-between items-center py-2 border-b border-surface-container-high last:border-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium">Electric Bill</p>
+<p class="font-label-md text-label-md text-secondary">Utilities • Oct 22</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono font-medium">-$85.20</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest shadow-lg md:hidden">
+<!-- Dashboard (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-95 transition-transform duration-200 w-16" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" data-weight="fill">dashboard</span>
+<span class="font-label-md text-label-md mt-1 sr-only">Dashboard</span>
+</a>
+<!-- Transactions -->
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md mt-1 sr-only">Transactions</span>
+</a>
+<!-- Goals -->
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="track_changes">track_changes</span>
+<span class="font-label-md text-label-md mt-1 sr-only">Goals</span>
+</a>
+<!-- Settings -->
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md mt-1 sr-only">Settings</span>
+</a>
+</nav>
+</body></html>

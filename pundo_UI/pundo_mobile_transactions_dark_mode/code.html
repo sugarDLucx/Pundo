@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Pundo - Transactions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "secondary-fixed-dim": "#b9c8de",
+                "primary-fixed": "#d8e2ff",
+                "on-tertiary-fixed-variant": "#005236",
+                "inverse-primary": "#005ac2",
+                "tertiary-container": "#00a572",
+                "surface-container-high": "#222a3d",
+                "secondary-fixed": "#d4e4fa",
+                "inverse-on-surface": "#283044",
+                "on-primary-fixed": "#001a42",
+                "primary-container": "#4d8eff",
+                "on-secondary": "#233143",
+                "on-secondary-fixed": "#0d1c2d",
+                "on-surface": "#dae2fd",
+                "tertiary-fixed-dim": "#4edea3",
+                "inverse-surface": "#dae2fd",
+                "on-tertiary": "#003824",
+                "primary": "#adc6ff",
+                "error-container": "#93000a",
+                "outline-variant": "#424754",
+                "on-tertiary-container": "#00311f",
+                "error": "#ffb4ab",
+                "surface-container-low": "#131b2e",
+                "on-primary": "#002e6a",
+                "surface-container-highest": "#2d3449",
+                "surface-tint": "#adc6ff",
+                "surface-container": "#171f33",
+                "on-background": "#dae2fd",
+                "on-primary-container": "#00285d",
+                "outline": "#8c909f",
+                "surface-container-lowest": "#060e20",
+                "surface": "#0b1326",
+                "surface-dim": "#0b1326",
+                "secondary-container": "#39485a",
+                "on-tertiary-fixed": "#002113",
+                "on-error": "#690005",
+                "on-error-container": "#ffdad6",
+                "tertiary-fixed": "#6ffbbe",
+                "tertiary": "#4edea3",
+                "on-surface-variant": "#c2c6d6",
+                "on-secondary-fixed-variant": "#39485a",
+                "surface-bright": "#31394d",
+                "background": "#0b1326",
+                "on-secondary-container": "#a7b6cc",
+                "surface-variant": "#2d3449",
+                "primary-fixed-dim": "#adc6ff",
+                "on-primary-fixed-variant": "#004395",
+                "secondary": "#b9c8de"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-lg": "16px",
+                "stack-xl": "32px",
+                "gutter": "24px",
+                "stack-sm": "4px",
+                "stack-md": "8px",
+                "container-padding-desktop": "32px",
+                "base": "8px",
+                "container-padding-mobile": "16px"
+        },
+        "fontFamily": {
+                "display-lg-mobile": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Inter"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "label-lg": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "display-lg-mobile": [
+                        "40px",
+                        {
+                                "lineHeight": "48px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-lg": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-lg": [
+                        "56px",
+                        {
+                                "lineHeight": "64px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Tonal Layering Shadows */
+        .shadow-level-1 { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased pt-16 pb-24 md:hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface shadow-sm flex items-center justify-between px-margin-mobile h-16 z-50 pt-safe">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest flex items-center justify-center">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzlPw4odEck9NQXZ-MrFbSid5fmDLZ9Gux0Ll8oXeREaQdgHyoN5eOYXeSMdZxDZ5NVqvomxSjIft2WwDu59AtRj2WjCKCHENlqOksMiqpYlVbBM8oTwSPRxUFzKehyuMgAL2LehN5GF2DNxldyQrupBduYFqqFFAteUqlC_tI4BA2IhanFydKsqAAcBCbpht_QtdGV12f76ERUliMbEeIw2whfO3bHHGFCUu940GmNIbVC2Mbn6YBbVcZ_um6e4Wez8KDH3-dEYA"/>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-primary">Pundo</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors active:opacity-80 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="px-margin-mobile flex flex-col gap-6 pt-4">
+<!-- Page Title -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Transactions</h1>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Review your recent financial activity.</p>
+</div>
+<!-- Summary Cards Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Total Spent -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-level-1 flex flex-col justify-between">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Spent This Month</span>
+<div class="mt-2 flex items-baseline gap-1">
+<span class="font-data-mono text-data-mono text-on-surface">$</span>
+<span class="font-headline-md text-headline-md text-on-surface">4,250.00</span>
+</div>
+<div class="mt-1 flex items-center gap-1 text-tertiary bg-tertiary-container/30 rounded px-2 py-0.5 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_down">trending_down</span>
+<span class="font-label-md text-label-md">12%</span>
+</div>
+</div>
+<!-- Top Category -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-level-1 flex flex-col justify-between">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Top Category</span>
+<div class="mt-2 flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Shopping</span>
+</div>
+<div class="mt-1 flex items-baseline gap-1">
+<span class="font-data-mono text-data-mono text-secondary">$1,120.00</span>
+</div>
+</div>
+</div>
+<!-- Search and Filter -->
+<div class="flex gap-2">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm text-body-sm rounded-lg pl-10 pr-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-secondary" placeholder="Search transactions..." type="text"/>
+</div>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg px-3 py-2 flex items-center justify-center hover:bg-surface-container transition-colors active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- Transactions List -->
+<div class="bg-surface-container-lowest rounded-xl shadow-level-1 overflow-hidden flex flex-col">
+<!-- Date Group -->
+<div class="bg-surface-container px-4 py-2 border-b border-surface-container-high">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Today, Oct 24</span>
+</div>
+<div class="flex flex-col">
+<!-- Transaction Item 1 -->
+<div class="flex items-center justify-between p-4 border-b border-surface-container-high hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/30 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Whole Foods Market</span>
+<span class="font-body-sm text-body-sm text-secondary">Groceries</span>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface font-medium">-$142.50</span>
+</div>
+<!-- Transaction Item 2 -->
+<div class="flex items-center justify-between p-4 border-b border-surface-container-high hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container/30 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="local_taxi">local_taxi</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Uber Ride</span>
+<span class="font-body-sm text-body-sm text-secondary">Transportation</span>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface font-medium">-$24.00</span>
+</div>
+</div>
+<!-- Date Group -->
+<div class="bg-surface-container px-4 py-2 border-y border-surface-container-high">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Yesterday, Oct 23</span>
+</div>
+<div class="flex flex-col">
+<!-- Transaction Item 3 -->
+<div class="flex items-center justify-between p-4 border-b border-surface-container-high hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 text-secondary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Pacific Gas &amp; Electric</span>
+<span class="font-body-sm text-body-sm text-secondary">Utilities</span>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface font-medium">-$85.20</span>
+</div>
+<!-- Transaction Item 4 (Income) -->
+<div class="flex items-center justify-between p-4 border-b border-surface-container-high hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/30 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Acme Corp Salary</span>
+<span class="font-body-sm text-body-sm text-secondary">Income</span>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-tertiary font-medium">+$3,200.00</span>
+</div>
+<!-- Transaction Item 5 -->
+<div class="flex items-center justify-between p-4 hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-error-container/30 text-error flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Netflix Standard</span>
+<span class="font-body-sm text-body-sm text-secondary">Entertainment</span>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface font-medium">-$15.49</span>
+</div>
+</div>
+<button class="w-full py-4 text-center font-label-md text-label-md text-primary hover:bg-surface-container-low transition-colors active:bg-surface-container border-t border-surface-container-high">
+                Load More Transactions
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest border-t border-outline-variant shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Transactions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="track_changes">track_changes</span>
+<span class="font-label-md text-label-md mt-1">Goals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:text-primary transition-colors active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

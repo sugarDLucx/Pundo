@@ -1,12 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
-  --primary: #4F46E5; /* Indigo 600 */
+  --primary: #4F46E5;
   --primary-hover: #4338CA;
   --bg-color: #F9FAFB;
   --text-color: #111827;
+}
+
+.dark {
+  --primary: #85ADFF;
+  --primary-hover: #6c9fff;
+  --bg-color: #0E0E0E;
+  --text-color: #FFFFFF;
 }
 
 body {

@@ -5,7 +5,7 @@ Pundo is a modern, responsive Personal Finance Progressive Web Application (PWA)
 
 ## Tech Stack
 - **Frontend**: React (hooks, functional components) with **Tailwind CSS** for styling & responsive design.
-- **State Management**: React Context + useReducer (or optional Redux Toolkit).
+- **State Management**: Zustand (for clean, minimal global state).
 - **Data Visualization**: Recharts.
 - **Backend / Auth / Database**: Supabase (PostgreSQL + Auth).
 - **PWA**: Web Manifest, Service Worker (Workbox) for offline capabilities.
@@ -49,15 +49,21 @@ Pundo is a modern, responsive Personal Finance Progressive Web Application (PWA)
 - Shared UI components: `Button`, `Modal`, `Input`, `Select`, `Card`.
 
 ## Checklist (Current Progress)
-- [ ] Project initialized with Vite + React + Tailwind.
-- [ ] Supabase client configured.
-- [ ] Basic routing set up.
-- [ ] Core UI components scaffolded.
+- [x] Project initialized with Vite + React + Tailwind.
+- [x] Supabase client configured.
+- [x] Basic routing set up.
+- [x] Core UI components scaffolded.
 - [ ] Data schema defined in Supabase.
-- [ ] PWA manifest and service worker added.
-- [ ] Dashboard with Recharts widgets.
-- [ ] CRUD operations for transactions.
-- [ ] Goal tracking UI.
+- [x] PWA manifest and service worker added.
+- [x] Dashboard with Recharts widgets.
+- [x] CRUD operations for transactions.
+- [x] Goal tracking UI.
 - [ ] Responsive design verified (mobile-first).
 
 *This file will be updated at the start and end of each interaction to keep project context consistent.*
+
+## Future Enhancements (To be decided/implemented)
+- **True PWA Installability**: Configure `vite-plugin-pwa` for offline support and "Add to Home Screen" prompts.
+- **Dark Mode Toggle**: Allow switching between light and dark themes.
+- **CSV Data Export**: Allow users to download their transaction history.
+- **Interactive Budget Limits**: Visual indicator of budget usage turning red when exceeding a set threshold.

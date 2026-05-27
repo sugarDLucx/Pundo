@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial Goals - Pundo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-dim": "#0b1326",
+                "on-error-container": "#ffdad6",
+                "secondary": "#b9c8de",
+                "surface-container-high": "#222a3d",
+                "on-tertiary-fixed-variant": "#005236",
+                "on-error": "#690005",
+                "error-container": "#93000a",
+                "outline-variant": "#424754",
+                "surface-container-highest": "#2d3449",
+                "surface": "#0b1326",
+                "tertiary-container": "#00a572",
+                "on-tertiary-fixed": "#002113",
+                "error": "#ffb4ab",
+                "on-secondary-container": "#a7b6cc",
+                "surface-container-lowest": "#060e20",
+                "outline": "#8c909f",
+                "primary": "#adc6ff",
+                "tertiary": "#4edea3",
+                "surface-bright": "#31394d",
+                "secondary-fixed-dim": "#b9c8de",
+                "primary-container": "#4d8eff",
+                "surface-container": "#171f33",
+                "tertiary-fixed-dim": "#4edea3",
+                "on-background": "#dae2fd",
+                "surface-variant": "#2d3449",
+                "inverse-surface": "#dae2fd",
+                "inverse-on-surface": "#283044",
+                "secondary-fixed": "#d4e4fa",
+                "on-surface-variant": "#c2c6d6",
+                "primary-fixed": "#d8e2ff",
+                "background": "#0b1326",
+                "on-secondary": "#233143",
+                "on-primary-fixed": "#001a42",
+                "tertiary-fixed": "#6ffbbe",
+                "on-primary-container": "#00285d",
+                "surface-container-low": "#131b2e",
+                "on-tertiary-container": "#00311f",
+                "primary-fixed-dim": "#adc6ff",
+                "on-secondary-fixed": "#0d1c2d",
+                "on-primary-fixed-variant": "#004395",
+                "inverse-primary": "#005ac2",
+                "surface-tint": "#adc6ff",
+                "on-tertiary": "#003824",
+                "on-secondary-fixed-variant": "#39485a",
+                "secondary-container": "#39485a",
+                "on-primary": "#002e6a",
+                "on-surface": "#dae2fd"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "container-padding-desktop": "32px",
+                "stack-sm": "4px",
+                "base": "8px",
+                "gutter": "24px",
+                "stack-lg": "16px",
+                "container-padding-mobile": "16px",
+                "stack-md": "8px",
+                "stack-xl": "32px",
+                "margin-mobile": "16px",
+                "margin-desktop": "40px",
+                "unit": "8px",
+                "container-max": "1280px"
+        },
+        "fontFamily": {
+                "label-sm": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Inter"
+                ],
+                "display-lg-mobile": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "label-lg": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "data-mono": [
+                        "JetBrains Mono"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "display-lg-mobile": [
+                        "40px",
+                        {
+                                "lineHeight": "48px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "56px",
+                        {
+                                "lineHeight": "64px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-lg": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "data-mono": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Ambient shadows and card styles */
+        .card-shadow {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); 
+        }
+        
+        .progress-track {
+            background-color: theme('colors.surface-container-high'); 
+        }
+        .progress-fill {
+            background-color: theme('colors.primary'); 
+        }
+        .progress-fill-over {
+            background-color: theme('colors.error'); 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-sm z-50">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-lg">account_balance</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Pundo</h1>
+<p class="font-label-md text-label-md text-secondary">Modern Finance</p>
+</div>
+</div>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md text-body-md">Transactions</span>
+</a>
+</li>
+<li>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-4 border-primary bg-surface-container-high transition-colors duration-200" href="#" style="transform: scale(0.98);">
+<span class="material-symbols-outlined icon-fill">track_changes</span>
+<span class="font-body-md text-body-md">Goals</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:text-primary hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto p-6">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary px-4 py-3 rounded-full font-body-md text-body-md hover:bg-primary-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Goal
+            </button>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 md:right-0 w-full md:w-[calc(100%-16rem)] h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop bg-surface/80 backdrop-blur-md border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-headline-sm text-headline-sm text-primary hidden md:block">Financial Goals</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="hidden md:block bg-surface-variant text-primary px-4 py-2 rounded-full font-body-sm text-body-sm hover:bg-surface-container-high transition-colors">
+                    Add Funds
+                </button>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a person looking forward. Soft lighting, neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgopB8Y2EBlFHASwtZxHueVEjHcBG7pcv3WrwlrIbLjGwnQkvnZEBOpy4b2eD_xUig3nQViV0kUriTx2jXubcJK_dSrxKAMgyV6JmYaOYhCSA0lLi0xLx4nOImskMGzM3k3oeN7pbdRnExobWdyRc22zo5Ylbm2BPSVR9r6nmDgqyFICtNjDSDw5hr3Ld-Ivcl8tEl9OGuXtKttHJq8-cUcvI0DlhAsVQFMM7ypP3E-TQumllkNh3kqwzyA8Tb-CZrGcoObqgRZpU"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 pt-24 pb-12 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Summary Header Section -->
+<div class="mb-gutter">
+<h1 class="font-headline-lg text-headline-lg text-on-background mb-6">Financial Goals</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Total Saved Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container">
+<p class="font-label-md text-label-md text-secondary uppercase mb-2">Total Saved Towards Goals</p>
+<p class="font-display-lg text-display-lg text-primary mb-2">$42,500<span class="font-headline-sm text-headline-sm text-secondary">.00</span></p>
+<div class="flex items-center gap-2 text-tertiary-container">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-body-sm text-body-sm">+5.2% this month</span>
+</div>
+</div>
+<!-- Active Goals Count Summary -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container flex flex-col justify-between">
+<div>
+<p class="font-label-md text-label-md text-secondary uppercase mb-2">Active Goals</p>
+<p class="font-display-lg text-display-lg text-on-background">3</p>
+</div>
+<div class="flex gap-2 mt-4">
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-full font-label-md text-label-md">On Track: 2</span>
+<span class="bg-surface-variant text-secondary px-3 py-1 rounded-full font-label-md text-label-md">Needs Attention: 1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Left Column: Active Goals Cards (Spans 2 columns on desktop) -->
+<div class="lg:col-span-2 space-y-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-background">Active Goals</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Goal Card 1: Emergency Fund -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container hover:border-outline-variant transition-colors duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-background leading-tight">Emergency Fund</h4>
+<p class="font-body-sm text-body-sm text-secondary">High Priority</p>
+</div>
+</div>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<div>
+<span class="font-data-mono text-data-mono text-primary text-lg">$15,000</span>
+<span class="font-body-sm text-body-sm text-secondary"> / $20,000</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-primary">75%</span>
+</div>
+<div class="h-2 w-full progress-track rounded-full overflow-hidden">
+<div class="h-full progress-fill rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">calendar_today</span>
+<span class="font-body-sm text-body-sm text-secondary">Dec 2024</span>
+</div>
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">payments</span>
+                                    +$500/mo
+                                </span>
+</div>
+</div>
+<!-- Goal Card 2: New Home -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container hover:border-outline-variant transition-colors duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">home</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-background leading-tight">New Home Down Payment</h4>
+<p class="font-body-sm text-body-sm text-secondary">Long Term</p>
+</div>
+</div>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<div>
+<span class="font-data-mono text-data-mono text-primary text-lg">$25,000</span>
+<span class="font-body-sm text-body-sm text-secondary"> / $100,000</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-primary">25%</span>
+</div>
+<div class="h-2 w-full progress-track rounded-full overflow-hidden">
+<div class="h-full progress-fill rounded-full" style="width: 25%;"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">calendar_today</span>
+<span class="font-body-sm text-body-sm text-secondary">Jun 2026</span>
+</div>
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">payments</span>
+                                    +$1,200/mo
+                                </span>
+</div>
+</div>
+<!-- Goal Card 3: Vacation -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container hover:border-outline-variant transition-colors duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">flight_takeoff</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-background leading-tight">Japan Trip</h4>
+<p class="font-body-sm text-body-sm text-error">Needs Attention</p>
+</div>
+</div>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<div>
+<span class="font-data-mono text-data-mono text-error text-lg">$2,500</span>
+<span class="font-body-sm text-body-sm text-secondary"> / $5,000</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-error">50%</span>
+</div>
+<div class="h-2 w-full progress-track rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 50%;"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">calendar_today</span>
+<span class="font-body-sm text-body-sm text-secondary">Oct 2024</span>
+</div>
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">payments</span>
+                                    +$300/mo
+                                </span>
+</div>
+</div>
+<!-- Add New Goal Card (Placeholder) -->
+<button class="bg-surface-container border-2 border-dashed border-outline-variant rounded-xl p-6 flex flex-col items-center justify-center text-secondary hover:text-primary hover:border-primary transition-colors duration-300 min-h-[220px]">
+<span class="material-symbols-outlined text-3xl mb-2">add_circle</span>
+<span class="font-headline-sm text-headline-sm">Create New Goal</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Analytics & History -->
+<div class="space-y-6">
+<!-- Goal Analytics -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-4">Progress Analytics</h3>
+<!-- Simple visual representation of a chart -->
+<div class="h-48 w-full relative flex items-end justify-between px-2 pt-8 pb-4 border-b border-l border-surface-container-high mb-2">
+<!-- Y-axis labels -->
+<div class="absolute left-[-24px] top-0 bottom-0 flex flex-col justify-between text-xs text-secondary py-4 font-data-mono">
+<span>100%</span>
+<span>50%</span>
+<span>0%</span>
+</div>
+<!-- Chart bars/lines simulation -->
+<div class="w-1/6 h-[20%] bg-surface-container-high rounded-t-sm relative group hover:bg-primary-container transition-colors">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-lg">Jan: 20%</div>
+</div>
+<div class="w-1/6 h-[35%] bg-surface-container-high rounded-t-sm relative group hover:bg-primary-container transition-colors">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-lg">Feb: 35%</div>
+</div>
+<div class="w-1/6 h-[45%] bg-surface-container-high rounded-t-sm relative group hover:bg-primary-container transition-colors">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-lg">Mar: 45%</div>
+</div>
+<div class="w-1/6 h-[60%] bg-primary-container rounded-t-sm relative group hover:bg-primary transition-colors">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-lg">Apr: 60%</div>
+</div>
+<div class="w-1/6 h-[72%] bg-primary rounded-t-sm relative group hover:bg-primary-fixed transition-colors">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-lg">May: 72%</div>
+</div>
+</div>
+<div class="flex justify-between text-xs text-secondary font-body-sm px-2">
+<span>Jan</span>
+<span>Feb</span>
+<span>Mar</span>
+<span>Apr</span>
+<span>May</span>
+</div>
+</div>
+<!-- Goal History / Milestones -->
+<div class="bg-surface-container-lowest rounded-xl p-6 card-shadow border border-surface-container">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-4">Recent Milestones</h3>
+<div class="space-y-4">
+<!-- History Item 1 -->
+<div class="flex items-start gap-4 pb-4 border-b border-surface-container-high last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container shrink-0 mt-1">
+<span class="material-symbols-outlined text-sm">emoji_events</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Reached 50% on Japan Trip</p>
+<p class="font-body-sm text-body-sm text-secondary">May 12, 2024</p>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="flex items-start gap-4 pb-4 border-b border-surface-container-high last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary shrink-0 mt-1">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Completed Laptop Fund</p>
+<p class="font-body-sm text-body-sm text-secondary">Apr 03, 2024</p>
+</div>
+</div>
+<!-- History Item 3 -->
+<div class="flex items-start gap-4 pb-4 border-b border-surface-container-high last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container shrink-0 mt-1">
+<span class="material-symbols-outlined text-sm">emoji_events</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-background">Reached $10,000 Total Saved</p>
+<p class="font-body-sm text-body-sm text-secondary">Feb 28, 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

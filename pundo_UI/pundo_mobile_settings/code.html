@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pundo - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-fixed-variant": "#173bab",
+                        "error-container": "#ffdad6",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001453",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-container": "#a8b8ff",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#b8c4ff",
+                        "outline": "#757684",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed": "#191c1e",
+                        "tertiary": "#003d27",
+                        "on-tertiary-fixed": "#002113",
+                        "on-tertiary-container": "#3fd298",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-container": "#1e40af",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-bright": "#f8f9ff",
+                        "secondary": "#5c5f61",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "background": "#f8f9ff",
+                        "surface-variant": "#d3e4fe",
+                        "outline-variant": "#c4c5d5",
+                        "on-secondary-container": "#626567",
+                        "secondary-container": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "on-surface": "#0b1c30",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#e0e3e5",
+                        "surface-tint": "#3755c3",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#00288e",
+                        "tertiary-container": "#00563a",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-surface-variant": "#444653",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "primary-fixed-dim": "#b8c4ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00288e;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00288e;
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #cbd5e1;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+        .toggle-label:after {
+            content: '';
+            position: absolute;
+            top: 0.125rem;
+            left: 0.125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 md:hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface dark:bg-surface-dim shadow-sm flex items-center justify-between px-margin-mobile h-16 w-full z-50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close up professional headshot of a person looking forward. The background is slightly blurred with soft modern lighting. The aesthetic aligns with a corporate modern light-mode theme, utilizing subtle cool tones to match the deep blue and slate palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQmPguihV7-VTIaSrtDaZ4eyD9PLhaDubTzBRz3SMdrDwWmXivuoz6bQCHrImpDZZJdkssKjwghCzc8b7TtEJK3YS1GHInWg4XAfdVSJa35yglq-3Yk_xfy1zJhN6G4BdmpvTLdltkggsuBKQ9biCCZozNas21pdXrnZALvsWX8Z52nlnYxBW8yG6r003RkHTTbEyADRbXoVBU_1gf9UkUie192oXwyUnv_9anEdYZg6q2tji_Jw4bb1-ZQCPKt6wDlC-KqCWTR7U"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Pundo</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-lowest transition-colors active:opacity-80 transition-opacity duration-150">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-margin-mobile flex flex-col gap-unit">
+<h2 class="font-headline-sm text-headline-sm mt-4 mb-2">Settings</h2>
+<!-- Settings List Container -->
+<div class="bg-surface-container-lowest shadow-sm rounded-xl overflow-hidden flex flex-col" style="box-shadow: 0 2px 4px rgba(0, 40, 142, 0.05);">
+<!-- Profile Item -->
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low active:bg-surface-container-high transition-colors border-b border-surface-container" onclick="toggleSection('profile-section')">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div class="text-left">
+<p class="font-body-md text-body-md font-medium">Profile</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Personal details &amp; identity</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right" id="profile-icon">chevron_right</span>
+</button>
+<div class="hidden p-4 bg-surface-bright border-b border-surface-container" id="profile-section">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Update your basic information.</p>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">Full Name</label>
+<input class="bg-surface border border-outline-variant focus:border-primary rounded-md px-3 py-2 font-body-md text-body-md text-on-surface outline-none transition-colors" type="text" value="Alex Morgan"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">Email</label>
+<input class="bg-surface border border-outline-variant focus:border-primary rounded-md px-3 py-2 font-body-md text-body-md text-on-surface outline-none transition-colors" type="email" value="alex@example.com"/>
+</div>
+<button class="mt-2 bg-primary text-on-primary font-body-md text-body-md py-2 px-4 rounded-full w-full hover:bg-primary-container transition-colors shadow-sm">Save Changes</button>
+</div>
+</div>
+<!-- Security Item -->
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low active:bg-surface-container-high transition-colors border-b border-surface-container" onclick="toggleSection('security-section')">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<div class="text-left">
+<p class="font-body-md text-body-md font-medium">Security</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Passwords, 2FA &amp; sessions</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200" data-icon="expand_more" id="security-icon">expand_more</span>
+</button>
+<div class="block p-4 bg-surface-bright border-b border-surface-container" id="security-section">
+<div class="flex flex-col gap-6">
+<!-- 2FA Toggle -->
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md font-medium">Two-Factor Authentication</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Require a code for login</p>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="tfa-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="tfa-toggle"></label>
+</div>
+</div>
+<div class="h-[1px] w-full bg-surface-container"></div>
+<!-- Login History -->
+<div>
+<p class="font-body-md text-body-md font-medium mb-3">Recent Login Activity</p>
+<div class="flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant mt-1 text-[20px]" data-icon="smartphone">smartphone</span>
+<div>
+<p class="font-body-sm text-body-sm font-medium">iPhone 13 Pro</p>
+<p class="font-label-md text-label-md text-on-surface-variant">San Francisco, CA • Active Now</p>
+</div>
+</div>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant mt-1 text-[20px]" data-icon="laptop_mac">laptop_mac</span>
+<div>
+<p class="font-body-sm text-body-sm font-medium">MacBook Pro</p>
+<p class="font-label-md text-label-md text-on-surface-variant">San Francisco, CA • Yesterday</p>
+</div>
+</div>
+<button class="font-label-md text-label-md text-error hover:underline">Revoke</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Notifications Item -->
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low active:bg-surface-container-high transition-colors border-b border-surface-container" onclick="toggleSection('notifications-section')">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</div>
+<div class="text-left">
+<p class="font-body-md text-body-md font-medium">Notifications</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Alerts &amp; communications</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right" id="notifications-icon">chevron_right</span>
+</button>
+<div class="hidden p-4 bg-surface-bright border-b border-surface-container" id="notifications-section">
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<p class="font-body-md text-body-md text-on-surface">Email Alerts</p>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="email-toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="email-toggle"></label>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="font-body-md text-body-md text-on-surface">Push Notifications</p>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="push-toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="push-toggle"></label>
+</div>
+</div>
+</div>
+</div>
+<!-- Preferences Item -->
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low active:bg-surface-container-high transition-colors" onclick="toggleSection('preferences-section')">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</div>
+<div class="text-left">
+<p class="font-body-md text-body-md font-medium">Preferences</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Theme, language &amp; display</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="chevron_right" id="preferences-icon">chevron_right</span>
+</button>
+<div class="hidden p-4 bg-surface-bright" id="preferences-section">
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<p class="font-body-md text-body-md text-on-surface">Dark Mode</p>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="theme-toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="theme-toggle"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-4 flex items-center justify-center gap-2 text-error font-body-md text-body-md py-3 rounded-xl bg-error-container/30 hover:bg-error-container/50 transition-colors w-full">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+            Sign Out
+        </button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest dark:bg-surface-container-low border-t border-outline-variant dark:border-outline shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md mt-1">Transactions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="track_changes">track_changes</span>
+<span class="font-label-md text-label-md mt-1">Goals</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-full px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</a>
+</nav>
+<script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const icon = document.getElementById(sectionId.split('-')[0] + '-icon');
+            
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+                section.classList.add('block');
+                icon.textContent = 'expand_more';
+                // Close others for accordian feel (optional based on preference, but good for mobile)
+                ['profile-section', 'security-section', 'notifications-section', 'preferences-section'].forEach(id => {
+                    if (id !== sectionId) {
+                        const otherSection = document.getElementById(id);
+                        if(otherSection) {
+                            otherSection.classList.add('hidden');
+                            otherSection.classList.remove('block');
+                            document.getElementById(id.split('-')[0] + '-icon').textContent = 'chevron_right';
+                        }
+                    }
+                });
+            } else {
+                section.classList.add('hidden');
+                section.classList.remove('block');
+                icon.textContent = 'chevron_right';
+            }
+        }
+    </script>
+</body></html>
