@@ -1,60 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, Receipt, Target, Settings, LogOut } from 'lucide-react';
-import { cn } from '../../lib/utils';
 import { useAuthStore } from '../../store/authStore';
+import { Icon } from '../ui/Icon';
+import { cn } from '../../lib/utils';
 
 export const AppLayout: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
-    { name: 'Transactions', path: '/transactions', icon: Receipt },
-    { name: 'Goals', path: '/goals', icon: Target },
-    { name: 'Settings', path: '/settings', icon: Settings },
+    { name: 'Dashboard', href: '/', icon: 'dashboard' },
+    { name: 'Transactions', href: '/transactions', icon: 'receipt_long' },
+    { name: 'Goals', href: '/goals', icon: 'track_changes' },
+    { name: 'Settings', href: '/settings', icon: 'settings' },
   ];
 
   const signOut = useAuthStore((state) => state.signOut);
 
   return (
-    <div className="flex h-screen bg-bg-color font-sans text-text-color">
+    <div className="flex min-h-screen bg-background text-on-surface font-body-md antialiased">
       {/* Sidebar */}
-      <aside className="hidden w-64 flex-col border-r border-slate-200 dark:border-[#20201F] bg-white dark:bg-[#131313] md:flex">
-        <div className="flex h-16 items-center border-b border-slate-200 dark:border-[#20201F] px-6">
-          <h1 className="text-2xl font-bold tracking-tight text-primary">Pundo.</h1>
-        </div>
-        <nav className="flex-1 space-y-1 px-4 py-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) =>
-                cn(
-                  "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-slate-100 dark:bg-[#20201F] text-primary"
-                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#20201F] hover:text-slate-900 dark:hover:text-white"
-                )
-              }
+      <aside className="hidden w-64 flex-col border-r border-surface-container-low bg-surface shadow-sm fixed left-0 top-0 h-screen z-20 md:flex">
+        <div className="flex flex-col h-full py-6 px-4">
+          <div className="flex items-center gap-3 mb-8 px-2">
+            <div className="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden shrink-0 flex items-center justify-center text-primary font-bold text-lg">
+              {useAuthStore.getState().user?.email?.charAt(0).toUpperCase() || 'U'}
+            </div>
+            <div>
+              <h1 className="font-headline-sm text-headline-sm font-bold text-primary">Pundo</h1>
+              <p className="font-label-md text-label-md text-on-surface-variant">Wealth Manager</p>
+            </div>
+          </div>
+          <nav className="flex-1 flex flex-col gap-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.href}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all font-label-md text-label-md",
+                    isActive
+                      ? "text-primary font-bold border-r-4 border-primary bg-surface-container-high scale-[0.98]"
+                      : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon name={item.icon} fill={isActive} />
+                    <span>{item.name}</span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="mt-auto pt-4 border-t border-surface-container-low">
+            <button 
+              onClick={() => signOut()}
+              className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors font-label-md text-label-md"
             >
-              <item.icon className="mr-3 h-5 w-5 flex-shrink-0" aria-hidden="true" />
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="border-t border-slate-200 dark:border-[#20201F] p-4">
-          <button 
-            onClick={() => signOut()}
-            className="flex w-full items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#20201F] hover:text-slate-900 dark:hover:text-white transition-colors"
-          >
-            <LogOut className="mr-3 h-5 w-5 flex-shrink-0" />
-            Sign out
-          </button>
+              <Icon name="logout" />
+              Sign out
+            </button>
+          </div>
         </div>
       </aside>
 
-      {/* Mobile Header (TODO: Add hamburger menu) */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-16 items-center border-b border-slate-200 dark:border-[#20201F] bg-white dark:bg-[#131313] px-4 md:hidden">
-          <span className="text-xl font-bold text-primary">Pundo.</span>
+      {/* Mobile Header */}
+      <div className="flex flex-1 flex-col overflow-hidden md:ml-64">
+        <header className="flex h-16 items-center border-b border-surface-container-low bg-surface px-4 md:hidden">
+          <span className="text-xl font-bold text-primary">Pundo</span>
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="text-on-surface-variant hover:text-primary ml-auto"
+          >
+            <Icon name="menu" className="h-6 w-6" />
+          </button>
         </header>
 
         {/* Main Content Area */}

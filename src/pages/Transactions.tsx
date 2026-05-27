@@ -3,9 +3,9 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Modal } from '../components/ui/Modal';
+import { Icon } from '../components/ui/Icon';
 import { TransactionForm } from '../components/transactions/TransactionForm';
 import { useTransactionStore } from '../store/transactionStore';
-import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const Transactions: React.FC = () => {
@@ -24,64 +24,70 @@ export const Transactions: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <header className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Transactions</h1>
-          <p className="mt-1 text-slate-500">View and manage your financial records.</p>
+          <h2 className="font-headline-lg text-headline-lg text-on-surface">Transactions</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Review your financial activity.</p>
         </div>
-        <Button onClick={() => setIsModalOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
+        <Button variant="primary" onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 rounded-full px-6 py-2">
+          <Icon name="add" className="text-[20px]" />
           Add Transaction
         </Button>
-      </div>
+      </header>
 
-      <Card className="overflow-hidden p-0 sm:p-0">
-        <div className="overflow-x-auto">
-          {loading && transactions.length === 0 ? (
-            <div className="p-8 text-center text-slate-500">Loading transactions...</div>
-          ) : transactions.length === 0 ? (
-            <div className="p-8 text-center text-slate-500">No transactions found. Add one to get started!</div>
-          ) : (
-            <table className="w-full text-left text-sm text-slate-600">
-              <thead className="bg-slate-50 text-xs uppercase text-slate-500">
-                <tr>
-                  <th className="px-6 py-4 font-medium">Date</th>
-                  <th className="px-6 py-4 font-medium">Description</th>
-                  <th className="px-6 py-4 font-medium">Category</th>
-                  <th className="px-6 py-4 font-medium">Type</th>
-                  <th className="px-6 py-4 font-medium text-right">Amount</th>
-                  <th className="px-6 py-4 font-medium text-right">Action</th>
+      <Card className="overflow-x-auto p-0">
+        <table className="w-full text-left min-w-[700px]">
+          <thead>
+            <tr className="border-b border-surface-container-low text-on-surface-variant font-label-md text-label-md bg-surface-container-lowest">
+              <th className="px-6 py-4 font-medium">Date</th>
+              <th className="px-6 py-4 font-medium">Description</th>
+              <th className="px-6 py-4 font-medium">Category</th>
+              <th className="px-6 py-4 font-medium">Status</th>
+              <th className="px-6 py-4 font-medium text-right">Amount</th>
+              <th className="px-6 py-4 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="font-body-sm text-body-sm text-on-surface">
+            {loading && transactions.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center text-on-surface-variant py-8">Loading transactions...</td>
+              </tr>
+            ) : transactions.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center text-on-surface-variant py-8">No transactions found. Click 'Add Transaction' to start.</td>
+              </tr>
+            ) : (
+              transactions.map((tx) => (
+                <tr key={tx.id} className="border-b border-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+                  <td className="px-6 py-4">{tx.date}</td>
+                  <td className="px-6 py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
+                  <td className="px-6 py-4">
+                    <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
+                      {tx.category}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="flex items-center gap-1 text-tertiary text-label-md">
+                      <Icon name="check_circle" className="text-[14px]" /> Completed
+                    </span>
+                  </td>
+                  <td className={cn("px-6 py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
+                    {tx.type === 'income' ? '+' : '-'}₱{Math.abs(tx.amount).toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      onClick={() => handleDelete(tx.id)}
+                      className="text-on-surface-variant hover:text-error transition-colors p-2 rounded-full hover:bg-error-container/30"
+                      title="Delete"
+                    >
+                      <Icon name="delete" className="text-[18px]" />
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {transactions.map((tx) => (
-                  <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="whitespace-nowrap px-6 py-4">{tx.date}</td>
-                    <td className="px-6 py-4 font-medium text-slate-900">{tx.note || '—'}</td>
-                    <td className="px-6 py-4">{tx.category}</td>
-                    <td className="px-6 py-4">
-                      <Badge variant={tx.type === 'income' ? 'success' : 'neutral'}>
-                        {tx.type}
-                      </Badge>
-                    </td>
-                    <td className={cn("px-6 py-4 text-right font-mono font-bold", tx.type === 'income' ? 'text-emerald-600' : 'text-slate-900')}>
-                      {tx.type === 'income' ? '+' : '-'}₱{tx.amount.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDelete(tx.id)}
-                        className="text-slate-400 hover:text-danger transition-colors"
-                        title="Delete Transaction"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </Card>
 
       <Modal

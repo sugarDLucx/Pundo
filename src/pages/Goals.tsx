@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
-import { ProgressBar } from '../components/ui/ProgressBar';
+import { Icon } from '../components/ui/Icon';
 import { GoalForm } from '../components/goals/GoalForm';
 import { AddFundsForm } from '../components/goals/AddFundsForm';
 import { useGoalStore } from '../store/goalStore';
-import { Plus, Target, Trash2 } from 'lucide-react';
+import { ProgressBar } from '../components/ui/ProgressBar';
+import { cn } from '../lib/utils';
 
 export const Goals: React.FC = () => {
   const { goals, loading, fetchGoals, deleteGoal } = useGoalStore();
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [fundingGoalId, setFundingGoalId] = useState<string | null>(null);
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
+  const [addFundsTarget, setAddFundsTarget] = useState<string | null>(null);
 
   useEffect(() => {
     fetchGoals();
@@ -23,101 +24,114 @@ export const Goals: React.FC = () => {
     }
   };
 
+  const getProgressColor = (current: number, target: number) => {
+    const percentage = (current / target) * 100;
+    if (percentage >= 100) return 'text-tertiary';
+    if (percentage >= 50) return 'text-primary';
+    return 'text-on-surface-variant';
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <header className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">Financial Goals</h1>
-          <p className="mt-1 text-slate-500 dark:text-slate-400">Track and fund your savings targets.</p>
+          <h2 className="font-headline-lg text-headline-lg text-on-surface">Financial Goals</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Track and manage your savings targets.</p>
         </div>
-        <Button onClick={() => setIsCreateModalOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
+        <Button variant="primary" onClick={() => setIsGoalModalOpen(true)} className="flex items-center gap-2 rounded-full px-6 py-2">
+          <Icon name="add" className="text-[20px]" />
           Create Goal
         </Button>
-      </div>
+      </header>
 
-      {loading && goals.length === 0 ? (
-        <div className="p-8 text-center text-slate-500 dark:text-slate-400">Loading goals...</div>
-      ) : goals.length === 0 ? (
-        <Card className="text-center py-12">
-          <Target className="mx-auto h-12 w-12 text-slate-300 dark:text-slate-600 mb-4" />
-          <h3 className="text-lg font-medium text-slate-900 dark:text-white">No active goals</h3>
-          <p className="text-slate-500 dark:text-slate-400 mt-1 mb-6">Create a goal to start tracking your savings progress.</p>
-          <Button onClick={() => setIsCreateModalOpen(true)}>Create Your First Goal</Button>
-        </Card>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {goals.map((goal) => {
-            const progress = Math.min(100, Math.max(0, (goal.current_amount / goal.target_amount) * 100));
-            const isCompleted = progress >= 100;
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {loading && goals.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-on-surface-variant font-label-md">
+            Loading goals...
+          </div>
+        ) : goals.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-on-surface-variant font-label-md">
+            No goals found. Create one to start saving!
+          </div>
+        ) : (
+          goals.map((goal) => {
+            const percentage = Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100));
+            const isCompleted = percentage >= 100;
+            const progressColorText = getProgressColor(goal.current_amount, goal.target_amount);
 
             return (
-              <Card key={goal.id} className="flex flex-col">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="pr-4">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">{goal.name}</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Target: {goal.target_date}</p>
+              <Card key={goal.id} className="flex flex-col gap-6 relative">
+                {isCompleted && (
+                  <div className="absolute -top-3 -right-3 bg-tertiary text-on-tertiary rounded-full p-2 shadow-lg">
+                    <Icon name="emoji_events" className="text-[20px]" />
+                  </div>
+                )}
+                
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-headline-sm text-headline-sm text-on-surface line-clamp-1" title={goal.name}>
+                      {goal.name}
+                    </h3>
+                    <p className="font-label-md text-label-md text-on-surface-variant mt-1">
+                      Target Date: {goal.target_date}
+                    </p>
                   </div>
                   <button
                     onClick={() => handleDelete(goal.id)}
-                    className="text-slate-400 hover:text-danger transition-colors p-1"
+                    className="text-on-surface-variant hover:text-error transition-colors p-2 -mr-2 -mt-2 rounded-full hover:bg-error-container/30"
                     title="Delete Goal"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Icon name="delete" className="text-[18px]" />
                   </button>
                 </div>
 
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      ₱{goal.current_amount.toFixed(2)}
+                <div className="flex flex-col gap-2 flex-1 justify-center">
+                  <div className="flex justify-between items-end">
+                    <span className="font-data-mono text-data-mono font-bold text-on-surface">
+                      ₱{goal.current_amount.toFixed(2)} / ₱{goal.target_amount.toFixed(2)}
                     </span>
-                    <span className="text-slate-500 dark:text-slate-400">
-                      of ₱{goal.target_amount.toFixed(2)}
+                    <span className={cn("font-label-md text-label-md", progressColorText)}>
+                      {percentage}%
                     </span>
                   </div>
-                  <ProgressBar value={progress} variant={isCompleted ? "success" : "primary"} />
+                  <ProgressBar 
+                    value={percentage} 
+                    variant={isCompleted ? 'success' : 'primary'} 
+                  />
                 </div>
 
-                <div className="mt-auto pt-4 border-t border-slate-100 dark:border-[#20201F]">
-                  <Button 
-                    variant={isCompleted ? 'ghost' : 'secondary'} 
-                    className="w-full"
-                    onClick={() => setFundingGoalId(goal.id)}
-                    disabled={isCompleted}
-                  >
-                    {isCompleted ? 'Goal Reached! 🎉' : 'Add Funds'}
-                  </Button>
-                </div>
+                <Button
+                  variant="secondary"
+                  className="w-full mt-auto rounded-full font-label-md"
+                  onClick={() => setAddFundsTarget(goal.id)}
+                  disabled={isCompleted}
+                >
+                  {isCompleted ? 'Goal Completed' : 'Add Funds'}
+                </Button>
               </Card>
             );
-          })}
-        </div>
-      )}
+          })
+        )}
+      </div>
 
-      {/* Create Goal Modal */}
       <Modal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        title="Create Financial Goal"
+        isOpen={isGoalModalOpen}
+        onClose={() => setIsGoalModalOpen(false)}
+        title="Create New Goal"
       >
-        <GoalForm
-          onSuccess={() => setIsCreateModalOpen(false)}
-          onCancel={() => setIsCreateModalOpen(false)}
-        />
+        <GoalForm onSuccess={() => setIsGoalModalOpen(false)} onCancel={() => setIsGoalModalOpen(false)} />
       </Modal>
 
-      {/* Add Funds Modal */}
       <Modal
-        isOpen={!!fundingGoalId}
-        onClose={() => setFundingGoalId(null)}
-        title="Fund Your Goal"
+        isOpen={!!addFundsTarget}
+        onClose={() => setAddFundsTarget(null)}
+        title="Add Funds to Goal"
       >
-        {fundingGoalId && (
-          <AddFundsForm
-            goalId={fundingGoalId}
-            onSuccess={() => setFundingGoalId(null)}
-            onCancel={() => setFundingGoalId(null)}
+        {addFundsTarget && (
+          <AddFundsForm 
+            goalId={addFundsTarget} 
+            onSuccess={() => setAddFundsTarget(null)} 
+            onCancel={() => setAddFundsTarget(null)}
           />
         )}
       </Modal>

@@ -10,8 +10,8 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
   ({ className, value, variant = 'primary', ...props }, ref) => {
     const variants = {
       primary: 'bg-primary',
-      danger: 'bg-danger',
-      success: 'bg-emerald-500',
+      danger: 'bg-error',
+      success: 'bg-tertiary',
     };
 
     // Clamp value between 0 and 100
@@ -20,7 +20,7 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     return (
       <div
         ref={ref}
-        className={cn("h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#20201F]", className)}
+        className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-container-high", className)}
         {...props}
       >
         <div

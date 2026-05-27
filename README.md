@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# Pundo Wealth Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pundo is a comprehensive, modern personal finance and wealth management dashboard built to help you track expenses, set savings goals, and manage your financial health effortlessly.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dashboard Overview:** Get a quick glance at your total balance, monthly income, expenses, and a breakdown of your spending categories through dynamic charts.
+- **Transactions Management:** Log and monitor your income and expenses with detailed categorization and clear visual status indicators.
+- **Goal Tracking:** Set financial goals, track progress with dynamic progress bars, and automatically link fund additions to expense records.
+- **Material Design 3 UI:** A fully responsive, modern interface featuring a curated color palette, beautiful typography (Inter & JetBrains Mono), and micro-animations.
+- **Dark Mode Support:** Seamlessly toggle between Light and Dark modes from the Settings panel.
+- **Progressive Web App (PWA):** Installable on mobile and desktop for offline capabilities and a native app experience.
 
-## React Compiler
+## 🛠️ Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React, TypeScript, Vite
+- **Styling:** Tailwind CSS v4 (Custom Material 3 Design Tokens)
+- **State Management:** Zustand
+- **Database & Authentication:** Supabase
+- **Data Visualization:** Recharts
+- **Icons:** Google Material Symbols Outlined
 
-## Expanding the ESLint configuration
+## 📦 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- A Supabase account and project
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/sugarDLucx/Pundo.git
+   cd Pundo
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Environment Setup:**
+   Create a `.env` file in the root directory and add your Supabase credentials:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+4. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:5173`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🎨 Design
+
+Pundo's user interface has been completely overhauled based on a custom Material Design 3 design system. It utilizes CSS variables mapped to Tailwind `@theme` directives to ensure a robust and easily maintainable Dark/Light mode toggle.
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
