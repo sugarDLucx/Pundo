@@ -291,8 +291,8 @@ export const Settings: React.FC = () => {
       </div>
 
       {/* Floating Save Button */}
-      <div className="fixed bottom-0 right-0 w-full lg:w-[calc(100%-16rem)] p-4 md:p-6 bg-surface/80 backdrop-blur-xl border-t border-surface-container-low z-30 flex justify-end">
-        <div className="mx-auto max-w-container-max w-full flex justify-end gap-4">
+      <div className="fixed bottom-0 right-0 w-full lg:w-[calc(100%-16rem)] p-2 md:p-4 bg-surface/90 backdrop-blur-xl border-t border-surface-container-low z-30 flex justify-end shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <div className="mx-auto max-w-container-max w-full flex justify-end gap-3 px-2">
           <button 
             onClick={() => {
               if (profile) {
@@ -303,17 +303,17 @@ export const Settings: React.FC = () => {
                 setEmailNotifs(profile.email_notifications ?? true);
               }
             }}
-            className="px-6 py-2.5 rounded-full border border-outline text-on-surface hover:bg-surface-container-low transition-colors"
+            className="px-4 py-2 text-sm md:text-base md:px-6 md:py-2.5 rounded-full border border-outline text-on-surface hover:bg-surface-container-low transition-colors"
           >
             Reset
           </button>
           <button 
             onClick={handleUpdateProfile}
             disabled={profileLoading}
-            className="px-6 py-2.5 rounded-full bg-primary text-on-primary hover:brightness-110 shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="px-5 py-2 text-sm md:text-base md:px-6 md:py-2.5 rounded-full bg-primary text-on-primary hover:brightness-110 shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2"
           >
-            <Icon name="save" className="text-[20px]" />
-            {profileLoading ? 'Saving...' : 'Save Settings'}
+            <Icon name="save" className="text-[18px] md:text-[20px]" />
+            {profileLoading ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>

@@ -42,7 +42,7 @@ export const AppLayout: React.FC = () => {
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 
   return (
-    <div className="flex min-h-screen bg-background text-on-surface font-body-md antialiased">
+    <div className="flex flex-col md:flex-row min-h-screen bg-background text-on-surface font-body-md antialiased">
       {/* Sidebar */}
       <aside className="hidden w-64 flex-col border-r border-surface-container-low bg-surface/80 backdrop-blur-xl shadow-sm fixed left-0 top-0 h-screen z-20 md:flex">
         <div className="flex flex-col h-full py-6 px-4">
