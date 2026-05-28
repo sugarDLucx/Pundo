@@ -96,13 +96,44 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     const user = useAuthStore.getState().user;
     if (!user) return;
     
+    // Create a temporary ID for optimistic update
+    const tempId = crypto.randomUUID();
+    const newNotif: Notification = {
+      id: tempId,
+      user_id: user.id,
+      title,
+      message,
+      type,
+      is_read: false,
+      created_at: new Date().toISOString()
+    };
+
+    // Optimistically update the store immediately so it pops up without waiting for the DB
+    set((state) => ({
+      notifications: [newNotif, ...state.notifications],
+      unreadCount: state.unreadCount + 1
+    }));
+    
     try {
-      await supabase
+      const { data, error } = await supabase
         .from('notifications')
-        .insert([{ user_id: user.id, title, message, type }]);
-      // Realtime subscription will pick this up and update the store
+        .insert([{ user_id: user.id, title, message, type }])
+        .select()
+        .single();
+        
+      if (error) throw error;
+
+      // Replace the temporary optimistic notification with the real one from the DB
+      set((state) => ({
+        notifications: state.notifications.map(n => n.id === tempId ? data as Notification : n)
+      }));
     } catch (error) {
       console.error('Error adding notification:', error);
+      // Revert optimistic update on error
+      set((state) => ({
+        notifications: state.notifications.filter(n => n.id !== tempId),
+        unreadCount: Math.max(0, state.unreadCount - 1)
+      }));
     }
   },
 
