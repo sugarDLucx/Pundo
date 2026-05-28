@@ -16,3 +16,14 @@ export const CATEGORY_THEMES: Record<string, string> = {
   'Health': 'bg-blue-900/30 text-blue-400',
   'Other': 'bg-surface-container-high text-on-surface-variant'
 };
+
+export const CATEGORY_ICONS: Record<string, string> = {
+  'Food & Dining': 'restaurant',
+  'Housing': 'home',
+  'Transportation': 'directions_car',
+  'Salary': 'payments',
+  'Entertainment': 'movie',
+  'Utilities': 'bolt',
+  'Health': 'medical_services',
+  'Other': 'category'
+};

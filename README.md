@@ -7,10 +7,12 @@ Pundo is a comprehensive, modern personal finance and wealth management dashboar
 - **Mobile First & Responsive:** Fully optimized for mobile devices with framer-motion dropdown navigation, responsive data cards, and layout reflows.
 - **Customizable Dashboard:** Drag and drop dashboard widgets (Overview, Charts, Transactions) that save securely to your profile.
 - **Interactive Charting:** Dynamic charts with timeframe toggles and smart Y-axis scaling using Recharts.
+- **Smart Analytics:** Real-time summary cards tracking monthly spending, top categories, and largest expenses.
+- **Advanced Filtering:** Dynamically filter transactions by timeframe, dynamic categories, and income/expense types.
 - **In-App Notifications:** Real-time push notifications for goals, large transactions, and system updates directly in the app.
 - **Global Localization (i18n):** Instantly switch between multiple languages and over a dozen global base currencies.
 - **Transactions & Goal Management:** Log income and expenses, set savings targets, and automatically track your progress.
-- **Material Design 3 UI & Animations:** Beautifully crafted interface featuring Glassmorphism, Framer Motion page transitions, micro-animations, and animated Skeleton loaders.
+- **Material Design 3 UI & Animations:** Beautifully crafted interface featuring Glassmorphism, Framer Motion page transitions, category-specific theming, and animated Skeleton loaders.
 - **Advanced Profiles:** Support for custom profile picture uploads (via Supabase Storage) and strict password change verification.
 - **Dark Mode Support:** Seamlessly toggle between Light and Dark modes with completely custom theming.
 - **Accessibility:** Fully accessible semantic HTML, proper contrast ratios, and connected form elements.

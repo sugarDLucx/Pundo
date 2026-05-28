@@ -7,7 +7,7 @@ import { TransactionForm } from '../components/transactions/TransactionForm';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useTransactionStore } from '../store/transactionStore';
 import { useProfileStore } from '../store/profileStore';
-import { cn, CATEGORY_THEMES } from '../lib/utils';
+import { cn, CATEGORY_THEMES, CATEGORY_ICONS } from '../lib/utils';
 import { format, parseISO } from 'date-fns';
 
 export const Transactions: React.FC = () => {
@@ -47,6 +47,12 @@ export const Transactions: React.FC = () => {
     spentPercentageChange = 100;
   }
   const isSpentUp = spentPercentageChange > 0;
+  
+  // Color Logic for Percentage Change
+  let spentChangeColor = 'text-yellow-500'; // Yellow if < 15% change
+  if (Math.abs(spentPercentageChange) >= 15) {
+    spentChangeColor = isSpentUp ? 'text-error' : 'text-success'; // Red if increased, Green if decreased
+  }
 
   // Top Category
   const categoryTotals = currentMonthExpenses.reduce((acc, t) => {
@@ -121,7 +127,7 @@ export const Transactions: React.FC = () => {
             <div className="font-headline-lg text-3xl font-data-mono text-on-surface mb-2">
               {currency}{totalSpentThisMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </div>
-            <span className={cn("font-label-sm flex items-center gap-1", isSpentUp ? 'text-error' : 'text-primary')}>
+            <span className={cn("font-label-sm flex items-center gap-1", spentChangeColor)}>
               <Icon name={isSpentUp ? 'arrow_upward' : 'arrow_downward'} className="text-[14px]" />
               {Math.abs(spentPercentageChange).toFixed(0)}% from last month
             </span>
@@ -131,8 +137,8 @@ export const Transactions: React.FC = () => {
         <Card className="flex flex-col justify-between h-40">
           <div className="flex justify-between items-start mb-2">
             <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Top Category</h3>
-            <div className="bg-tertiary/20 p-2 rounded-full text-tertiary">
-              <Icon name="restaurant" className="text-[20px]" />
+            <div className={cn("p-2 rounded-full", CATEGORY_THEMES[topCategory] || CATEGORY_THEMES['Other'])}>
+              <Icon name={CATEGORY_ICONS[topCategory] || CATEGORY_ICONS['Other']} className="text-[20px]" />
             </div>
           </div>
           <div>
@@ -150,8 +156,8 @@ export const Transactions: React.FC = () => {
         <Card className="flex flex-col justify-between h-40">
           <div className="flex justify-between items-start mb-2">
             <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Largest Expense</h3>
-            <div className="bg-error-container p-2 rounded-full text-error">
-              <Icon name="home" className="text-[20px]" />
+            <div className={cn("p-2 rounded-full", largestExpense ? (CATEGORY_THEMES[largestExpense.category] || CATEGORY_THEMES['Other']) : CATEGORY_THEMES['Other'])}>
+              <Icon name={largestExpense ? (CATEGORY_ICONS[largestExpense.category] || CATEGORY_ICONS['Other']) : CATEGORY_ICONS['Other']} className="text-[20px]" />
             </div>
           </div>
           <div>
@@ -210,7 +216,6 @@ export const Transactions: React.FC = () => {
                 <th className="px-6 py-4 font-medium">Date</th>
                 <th className="px-6 py-4 font-medium">Description</th>
                 <th className="px-6 py-4 font-medium">Category</th>
-                <th className="px-6 py-4 font-medium">Status</th>
                 <th className="px-6 py-4 font-medium text-right">Amount</th>
                 <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
@@ -220,13 +225,13 @@ export const Transactions: React.FC = () => {
                 <>
                   {[...Array(5)].map((_, i) => (
                     <tr key={i} className="border-b border-surface-container-lowest last:border-0">
-                      <td colSpan={6} className="py-4"><Skeleton className="h-8 w-full" /></td>
+                      <td colSpan={5} className="py-4"><Skeleton className="h-8 w-full" /></td>
                     </tr>
                   ))}
                 </>
               ) : filteredTransactions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center text-on-surface-variant py-8">No transactions found matching your filters.</td>
+                  <td colSpan={5} className="text-center text-on-surface-variant py-8">No transactions found matching your filters.</td>
                 </tr>
               ) : (
                 filteredTransactions.map((tx) => (
@@ -239,11 +244,6 @@ export const Transactions: React.FC = () => {
                         CATEGORY_THEMES[tx.category] || CATEGORY_THEMES['Other']
                       )}>
                         {tx.category}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="flex items-center gap-1 text-tertiary text-label-md">
-                        <Icon name="check_circle" className="text-[14px]" /> Completed
                       </span>
                     </td>
                     <td className={cn("px-6 py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
@@ -293,9 +293,6 @@ export const Transactions: React.FC = () => {
                         CATEGORY_THEMES[tx.category] || CATEGORY_THEMES['Other']
                       )}>
                        {tx.category}
-                     </span>
-                     <span className="flex items-center gap-1 text-tertiary text-label-sm">
-                       <Icon name="check_circle" className="text-[12px]" /> Done
                      </span>
                    </div>
                    <button
