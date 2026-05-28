@@ -190,7 +190,7 @@ export const Dashboard: React.FC = () => {
                     cursor={{ fill: 'var(--surface-container-low)' }}
                     contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
                     itemStyle={{ fontFamily: 'JetBrains Mono' }}
-                    formatter={(val: number) => `${currency}${val.toFixed(2)}`}
+                    formatter={(val: any) => `${currency}${Number(val).toFixed(2)}`}
                   />
                   <Bar dataKey="income" fill="var(--primary)" radius={[2, 2, 0, 0]} />
                   <Bar dataKey="expense" fill="var(--tertiary)" radius={[2, 2, 0, 0]} />
@@ -221,14 +221,14 @@ export const Dashboard: React.FC = () => {
                       dataKey="value"
                       stroke="none"
                     >
-                      {categoryData.map((entry, index) => (
+                      {categoryData.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
                       itemStyle={{ fontFamily: 'JetBrains Mono' }}
-                      formatter={(val: number) => `${currency}${val.toFixed(2)}`}
+                      formatter={(val: any) => `${currency}${Number(val).toFixed(2)}`}
                     />
                   </PieChart>
                 </ResponsiveContainer>

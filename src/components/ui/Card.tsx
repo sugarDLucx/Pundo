@@ -1,8 +1,9 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
 import { motion } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardProps extends HTMLMotionProps<"div"> {}
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, children, ...props }, ref) => {

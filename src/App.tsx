@@ -14,7 +14,7 @@ import { useProfileStore } from './store/profileStore';
 
 function App() {
   const initialize = useAuthStore((state) => state.initialize);
-  const { session, user, loading } = useAuthStore();
+  const { session, user } = useAuthStore();
   const { isDarkMode } = useThemeStore();
   const { fetchProfile } = useProfileStore();
 
