@@ -160,7 +160,7 @@ export const Settings: React.FC = () => {
                     className={cn(
                       "flex w-full items-center space-x-2 lg:space-x-3 px-4 py-2.5 lg:py-3 rounded-full lg:rounded-lg font-body-md text-body-md transition-colors",
                       activeSection === item.id 
-                        ? "bg-primary-container text-primary font-bold" 
+                        ? "bg-primary text-on-primary shadow-sm font-medium" 
                         : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface bg-surface border lg:border-transparent border-surface-container-high"
                     )}
                   >

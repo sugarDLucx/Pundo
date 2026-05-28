@@ -85,7 +85,7 @@ export const AppLayout: React.FC = () => {
           <div className="mt-auto pt-4 border-t border-surface-container-low">
             <button
               onClick={signOut}
-              className="flex w-full items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-error-container/30 hover:text-error transition-colors font-body-md text-body-md mt-2"
+              className="flex w-full items-center space-x-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-error-container/30 hover:text-error transition-colors font-body-md text-body-md mt-2"
             >
               <LogOut className="h-5 w-5" />
               <span>{t('sidebar.logout', 'Log out')}</span>

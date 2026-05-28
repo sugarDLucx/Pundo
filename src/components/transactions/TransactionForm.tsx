@@ -60,12 +60,12 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, onC
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Type Toggle */}
-      <div className="flex rounded-lg border border-slate-200 bg-slate-50 p-1">
+      <div className="flex rounded-lg border border-surface-container-high bg-surface-container-lowest p-1">
         <button
           type="button"
           onClick={() => setType('expense')}
           className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-            type === 'expense' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+            type === 'expense' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
           }`}
         >
           Expense
@@ -74,7 +74,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, onC
           type="button"
           onClick={() => setType('income')}
           className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-            type === 'income' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+            type === 'income' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
           }`}
         >
           Income

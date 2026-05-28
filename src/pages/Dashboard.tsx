@@ -129,7 +129,6 @@ export const Dashboard: React.FC = () => {
     overview: (
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="flex flex-col justify-between h-32 relative overflow-hidden group">
-          <div className="absolute -right-4 -top-4 w-24 h-24 bg-surface-container rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
           <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2 z-10">
             <Icon name="account_balance_wallet" className="text-primary" />
             Total Balance
@@ -175,7 +174,7 @@ export const Dashboard: React.FC = () => {
               <option value={12}>Last 12 Months</option>
             </select>
           </div>
-          <div className="flex-1 min-h-[250px]">
+          <div className="flex-1 w-full min-h-[300px]">
             {loading ? (
               <div className="w-full h-full flex items-end gap-2 pb-4">
                 {[...Array(timeframe)].map((_, i) => (
@@ -183,10 +182,10 @@ export const Dashboard: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                   <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'Inter' }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => `${currency}${val}`} />
+                  <YAxis width={60} axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => val >= 1000000 ? `${currency}${(val/1000000).toFixed(1)}M` : val >= 1000 ? `${currency}${(val/1000).toFixed(1)}k` : `${currency}${val}`} />
                   <Tooltip 
                     cursor={{ fill: 'var(--surface-container-low)' }}
                     contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
@@ -209,8 +208,8 @@ export const Dashboard: React.FC = () => {
                 <Skeleton className="w-48 h-48 rounded-full" />
               </div>
             ) : categoryData.length > 0 ? (
-              <div className="flex-1">
-                <ResponsiveContainer width="100%" height="100%" minHeight={200}>
+              <div className="flex-1 w-full min-h-[250px]">
+                <ResponsiveContainer width="100%" height={250}>
                   <PieChart>
                     <Pie
                       data={categoryData}
