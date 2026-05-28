@@ -1,17 +1,18 @@
-# Pundo Wealth Manager (v1.1.0)
+# Pundo Wealth Manager (v1.2.0)
 
 Pundo is a comprehensive, modern personal finance and wealth management dashboard built to help you track expenses, set savings goals, and manage your financial health effortlessly.
 
 ## 🚀 Features
 
+- **Mobile First & Responsive:** Fully optimized for mobile devices with framer-motion dropdown navigation, responsive data cards, and layout reflows.
 - **Customizable Dashboard:** Drag and drop dashboard widgets (Overview, Charts, Transactions) that save securely to your profile.
-- **Interactive Charting:** Dynamic charts with timeframe toggles (3, 6, 12 months) and custom hover tooltips.
-- **Global Localization (i18n):** Instantly switch between English, Spanish, and French.
+- **Interactive Charting:** Dynamic charts with timeframe toggles and smart Y-axis scaling using Recharts.
+- **Global Localization (i18n):** Instantly switch between multiple languages and over a dozen global base currencies.
 - **Transactions & Goal Management:** Log income and expenses, set savings targets, and automatically track your progress.
 - **Material Design 3 UI & Animations:** Beautifully crafted interface featuring Glassmorphism, Framer Motion page transitions, micro-animations, and animated Skeleton loaders.
 - **Advanced Profiles:** Support for custom profile picture uploads (via Supabase Storage) and strict password change verification.
-- **Dark Mode Support:** Seamlessly toggle between Light and Dark modes.
-- **Progressive Web App (PWA):** Installable on mobile and desktop for offline capabilities and a native app experience.
+- **Dark Mode Support:** Seamlessly toggle between Light and Dark modes with completely custom theming.
+- **Accessibility:** Fully accessible semantic HTML, proper contrast ratios, and connected form elements.
 
 ## 🛠️ Technology Stack
 
@@ -53,6 +54,15 @@ Pundo is a comprehensive, modern personal finance and wealth management dashboar
    npm run dev
    ```
    The application will be available at `http://localhost:5173`.
+
+## 🚀 Deployment (Vercel)
+
+Pundo is fully optimized and ready to be deployed to Vercel. 
+Simply link your GitHub repository to Vercel and ensure you add the following Environment Variables in your Vercel project settings:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+Vercel will automatically detect the Vite build settings (`npm run build` and output directory `dist`).
 
 ## 🎨 Design
 
