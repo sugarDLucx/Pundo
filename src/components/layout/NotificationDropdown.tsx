@@ -61,7 +61,7 @@ export const NotificationDropdown: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-2 w-80 sm:w-96 bg-surface-container-lowest border border-surface-container-low rounded-xl shadow-lg z-50 overflow-hidden"
+            className="absolute right-0 md:left-full md:right-auto md:-mt-10 md:ml-4 mt-2 w-80 sm:w-96 bg-surface-container-lowest border border-surface-container-low rounded-xl shadow-lg z-50 overflow-hidden"
           >
             <div className="p-4 border-b border-surface-container-low flex justify-between items-center bg-surface/50 backdrop-blur-sm">
               <h3 className="font-headline-sm text-headline-sm text-on-surface">Notifications</h3>

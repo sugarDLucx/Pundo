@@ -45,6 +45,8 @@ export const Login: React.FC = () => {
             <Input
               label="Email"
               type="email"
+              id="email"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
@@ -53,6 +55,8 @@ export const Login: React.FC = () => {
             <Input
               label="Password"
               type="password"
+              id="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
