@@ -3,10 +3,12 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { LogOut, Menu, X } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useProfileStore } from '../../store/profileStore';
+import { useNotificationStore } from '../../store/notificationStore';
 import { Icon } from '../ui/Icon';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
+import { NotificationDropdown } from './NotificationDropdown';
 
 export const AppLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,6 +16,15 @@ export const AppLayout: React.FC = () => {
   const { profile } = useProfileStore();
   const location = useLocation();
   const { t, i18n } = useTranslation();
+  const { fetchNotifications, initializeRealtime } = useNotificationStore();
+
+  useEffect(() => {
+    fetchNotifications();
+    const unsubscribe = initializeRealtime();
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -46,18 +57,21 @@ export const AppLayout: React.FC = () => {
       {/* Sidebar */}
       <aside className="hidden w-64 flex-col border-r border-surface-container-low bg-surface/80 backdrop-blur-xl shadow-sm fixed left-0 top-0 h-screen z-20 md:flex">
         <div className="flex flex-col h-full py-6 px-4">
-          <div className="flex items-center space-x-3 px-4 mb-10">
-            <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary overflow-hidden shrink-0">
-              {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <Icon name="person" className="text-[24px]" />
-              )}
+          <div className="flex items-center justify-between px-4 mb-10">
+            <div className="flex items-center space-x-3 overflow-hidden">
+              <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary overflow-hidden shrink-0">
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <Icon name="person" className="text-[24px]" />
+                )}
+              </div>
+              <div className="overflow-hidden">
+                <h1 className="font-headline-sm text-headline-sm font-bold text-primary tracking-tight truncate" title={lastName}>{lastName}</h1>
+                <p className="font-label-md text-label-md text-on-surface-variant truncate" title={firstName}>{firstName}</p>
+              </div>
             </div>
-            <div className="overflow-hidden">
-              <h1 className="font-headline-sm text-headline-sm font-bold text-primary tracking-tight truncate" title={lastName}>{lastName}</h1>
-              <p className="font-label-md text-label-md text-on-surface-variant truncate" title={firstName}>{firstName}</p>
-            </div>
+            <NotificationDropdown />
           </div>
           <nav className="flex-1 flex flex-col gap-1">
             {navItems.map((item) => (
@@ -108,9 +122,12 @@ export const AppLayout: React.FC = () => {
             <span className="font-headline-sm text-headline-sm font-bold text-primary tracking-tight truncate">{lastName}</span>
           </div>
         </div>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 relative z-50">
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center space-x-2">
+          <NotificationDropdown />
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 relative z-50">
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Dropdown */}
