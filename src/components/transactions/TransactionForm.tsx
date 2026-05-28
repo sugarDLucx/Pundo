@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
 import { useTransactionStore } from '../../store/transactionStore';
 import type { TransactionType } from '../../store/transactionStore';
+import { useNotificationStore } from '../../store/notificationStore';
 
 interface TransactionFormProps {
   onSuccess?: () => void;
@@ -23,6 +24,7 @@ const CATEGORY_OPTIONS = [
 
 export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, onCancel }) => {
   const addTransaction = useTransactionStore((state) => state.addTransaction);
+  const addNotification = useNotificationStore((state) => state.addNotification);
   
   const [type, setType] = useState<TransactionType>('expense');
   const [amount, setAmount] = useState('');
@@ -49,6 +51,11 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({ onSuccess, onC
         date,
         note,
       });
+
+      if (type === 'expense' && Number(amount) >= 10000) {
+        addNotification('Large Expense Logged', `You just logged an expense of ${Number(amount).toLocaleString()}. Keep an eye on your budget!`, 'warning');
+      }
+
       if (onSuccess) onSuccess();
     } catch (err: any) {
       setError(err.message || 'Failed to add transaction');

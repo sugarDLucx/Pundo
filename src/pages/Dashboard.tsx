@@ -5,6 +5,7 @@ import { useTransactionStore } from '../store/transactionStore';
 import { useProfileStore } from '../store/profileStore';
 import { Icon } from '../components/ui/Icon';
 import { Skeleton } from '../components/ui/Skeleton';
+import { useNotificationStore } from '../store/notificationStore';
 import { cn } from '../lib/utils';
 import {
   DndContext,
@@ -51,6 +52,7 @@ function SortableSection({ id, children }: { id: string, children: React.ReactNo
 export const Dashboard: React.FC = () => {
   const { transactions, loading, fetchTransactions } = useTransactionStore();
   const { profile, updateProfile } = useProfileStore();
+  const addNotification = useNotificationStore((state) => state.addNotification);
   const currency = profile?.currency || '₱';
 
   const [layout, setLayout] = useState<string[]>(['overview', 'charts', 'transactions']);
@@ -58,7 +60,14 @@ export const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetchTransactions();
-  }, [fetchTransactions]);
+    
+    // Welcome Notification Logic
+    const hasSeenWelcome = localStorage.getItem('hasSeenWelcome_v1');
+    if (!hasSeenWelcome) {
+      addNotification('Welcome to Pundo! 👋', 'Start tracking your finances by adding your first transaction or setting up a savings goal.', 'info');
+      localStorage.setItem('hasSeenWelcome_v1', 'true');
+    }
+  }, [fetchTransactions, addNotification]);
 
   useEffect(() => {
     if (profile?.dashboard_layout && Array.isArray(profile.dashboard_layout) && profile.dashboard_layout.length > 0) {

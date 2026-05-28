@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { useGoalStore } from '../../store/goalStore';
+import { useNotificationStore } from '../../store/notificationStore';
 
 interface AddFundsFormProps {
   goalId: string;
@@ -11,6 +12,8 @@ interface AddFundsFormProps {
 
 export const AddFundsForm: React.FC<AddFundsFormProps> = ({ goalId, onSuccess, onCancel }) => {
   const addFunds = useGoalStore((state) => state.addFunds);
+  const goals = useGoalStore((state) => state.goals);
+  const addNotification = useNotificationStore((state) => state.addNotification);
   
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +29,20 @@ export const AddFundsForm: React.FC<AddFundsFormProps> = ({ goalId, onSuccess, o
     setLoading(true);
     setError(null);
     try {
+      const goal = goals.find(g => g.id === goalId);
+      const currentSaved = goal?.current_amount || 0;
+      const target = goal?.target_amount || 1;
+      const previousPercentage = currentSaved / target;
+      const newPercentage = (currentSaved + Number(amount)) / target;
+
       await addFunds(goalId, Number(amount));
+
+      if (newPercentage >= 1 && previousPercentage < 1) {
+        addNotification('Goal Reached! 🎊', `You've fully funded your ${goal?.name} goal!`, 'success');
+      } else if (newPercentage >= 0.5 && previousPercentage < 0.5) {
+        addNotification('Halfway There! 🎯', `You're 50% of the way to your ${goal?.name} goal!`, 'info');
+      }
+
       if (onSuccess) onSuccess();
     } catch (err: any) {
       setError(err.message || 'Failed to add funds');

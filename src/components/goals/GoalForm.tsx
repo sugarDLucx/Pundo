@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { useGoalStore } from '../../store/goalStore';
+import { useNotificationStore } from '../../store/notificationStore';
 
 interface GoalFormProps {
   onSuccess?: () => void;
@@ -10,6 +11,7 @@ interface GoalFormProps {
 
 export const GoalForm: React.FC<GoalFormProps> = ({ onSuccess, onCancel }) => {
   const addGoal = useGoalStore((state) => state.addGoal);
+  const addNotification = useNotificationStore((state) => state.addNotification);
   
   const [name, setName] = useState('');
   const [targetAmount, setTargetAmount] = useState('');
@@ -32,6 +34,9 @@ export const GoalForm: React.FC<GoalFormProps> = ({ onSuccess, onCancel }) => {
         target_amount: Number(targetAmount),
         target_date: targetDate,
       });
+      
+      addNotification('New Goal Created! 🎉', `Good luck saving for ${name}!`, 'success');
+
       if (onSuccess) onSuccess();
     } catch (err: any) {
       setError(err.message || 'Failed to create goal');
