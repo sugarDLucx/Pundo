@@ -6,11 +6,14 @@ import { Icon } from '../components/ui/Icon';
 import { GoalForm } from '../components/goals/GoalForm';
 import { AddFundsForm } from '../components/goals/AddFundsForm';
 import { useGoalStore } from '../store/goalStore';
+import { useProfileStore } from '../store/profileStore';
 import { ProgressBar } from '../components/ui/ProgressBar';
 import { cn } from '../lib/utils';
 
 export const Goals: React.FC = () => {
   const { goals, loading, fetchGoals, deleteGoal } = useGoalStore();
+  const { profile } = useProfileStore();
+  const currency = profile?.currency || '₱';
   const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
   const [addFundsTarget, setAddFundsTarget] = useState<string | null>(null);
 
@@ -88,7 +91,7 @@ export const Goals: React.FC = () => {
                 <div className="flex flex-col gap-2 flex-1 justify-center">
                   <div className="flex justify-between items-end">
                     <span className="font-data-mono text-data-mono font-bold text-on-surface">
-                      ₱{goal.current_amount.toFixed(2)} / ₱{goal.target_amount.toFixed(2)}
+                      {currency}{goal.current_amount.toFixed(2)} / {currency}{goal.target_amount.toFixed(2)}
                     </span>
                     <span className={cn("font-label-md text-label-md", progressColorText)}>
                       {percentage}%

@@ -6,10 +6,13 @@ import { Modal } from '../components/ui/Modal';
 import { Icon } from '../components/ui/Icon';
 import { TransactionForm } from '../components/transactions/TransactionForm';
 import { useTransactionStore } from '../store/transactionStore';
+import { useProfileStore } from '../store/profileStore';
 import { cn } from '../lib/utils';
 
 export const Transactions: React.FC = () => {
   const { transactions, loading, fetchTransactions, deleteTransaction } = useTransactionStore();
+  const { profile } = useProfileStore();
+  const currency = profile?.currency || '₱';
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -72,7 +75,7 @@ export const Transactions: React.FC = () => {
                     </span>
                   </td>
                   <td className={cn("px-6 py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
-                    {tx.type === 'income' ? '+' : '-'}₱{Math.abs(tx.amount).toFixed(2)}
+                    {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button

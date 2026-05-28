@@ -1,47 +1,37 @@
 import React, { useEffect, useMemo } from 'react';
 import { Card } from '../components/ui/Card';
-import { Badge } from '../components/ui/Badge';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell } from 'recharts';
-import { ArrowUpRight, ArrowDownRight, Wallet } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, PieChart, Pie } from 'recharts';
 import { useTransactionStore } from '../store/transactionStore';
+import { useProfileStore } from '../store/profileStore';
+import { Icon } from '../components/ui/Icon';
 import { cn } from '../lib/utils';
-import { Link } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
   const { transactions, loading, fetchTransactions } = useTransactionStore();
+  const { profile } = useProfileStore();
+  const currency = profile?.currency || '₱';
 
   useEffect(() => {
     fetchTransactions();
   }, [fetchTransactions]);
 
-  // Calculate totals
-  const { totalIncome, totalExpense, balance } = useMemo(() => {
-    return transactions.reduce(
-      (acc, tx) => {
-        if (tx.type === 'income') {
-          acc.totalIncome += tx.amount;
-          acc.balance += tx.amount;
-        } else {
-          acc.totalExpense += tx.amount;
-          acc.balance -= tx.amount;
-        }
-        return acc;
-      },
-      { totalIncome: 0, totalExpense: 0, balance: 0 }
-    );
-  }, [transactions]);
+  const { totalIncome, totalExpense, balance, chartData, categoryData } = useMemo(() => {
+    let inc = 0;
+    let exp = 0;
+    const categories: Record<string, number> = {};
+    const now = new Date();
+    const last6Months = Array.from({ length: 6 }, (_, i) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      return {
+        monthIndex: d.getMonth(),
+        year: d.getFullYear(),
+        month: d.toLocaleString('default', { month: 'short' }),
+        income: 0,
+        expense: 0
+      };
+    }).reverse();
 
-  // Generate chart data (group expenses by day of the week for the last 7 days)
-  const chartData = useMemo(() => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const data = days.map((day) => ({ name: day, amount: 0 }));
-    
-    // Simple grouping: just find the day of the week for each transaction
     transactions.forEach((tx) => {
-      if (tx.type === 'expense') {
-        const date = new Date(tx.date);
-        const dayName = days[date.getDay()];
-        const target = data.find((d) => d.name === dayName);
       if (tx.type === 'income') {
         inc += tx.amount;
       } else {
@@ -66,7 +56,6 @@ export const Dashboard: React.FC = () => {
     };
   }, [transactions]);
 
-  // Use CSS variables for charts
   const CHART_COLORS = ['var(--primary)', 'var(--tertiary)', 'var(--surface-container-highest)', 'var(--error)'];
 
   return (
@@ -86,7 +75,7 @@ export const Dashboard: React.FC = () => {
             Total Balance
           </h3>
           <div className="font-display-lg text-4xl sm:text-5xl font-data-mono text-primary z-10 tracking-tight">
-            {balance < 0 ? '-' : ''}₱{Math.abs(balance).toFixed(2)}
+            {balance < 0 ? '-' : ''}{currency}{Math.abs(balance).toFixed(2)}
           </div>
         </Card>
 
@@ -98,7 +87,7 @@ export const Dashboard: React.FC = () => {
             </h3>
           </div>
           <div className="font-headline-lg text-3xl sm:text-4xl font-data-mono text-on-surface">
-            ₱{totalIncome.toFixed(2)}
+            {currency}{totalIncome.toFixed(2)}
           </div>
         </Card>
 
@@ -110,7 +99,7 @@ export const Dashboard: React.FC = () => {
             </h3>
           </div>
           <div className="font-headline-lg text-3xl sm:text-4xl font-data-mono text-on-surface">
-            ₱{totalExpense.toFixed(2)}
+            {currency}{totalExpense.toFixed(2)}
           </div>
         </Card>
       </section>
@@ -119,26 +108,17 @@ export const Dashboard: React.FC = () => {
         <Card className="xl:col-span-2 min-h-[320px] flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-headline-sm text-headline-sm text-on-surface">Income vs Expenses</h3>
-            <div className="flex gap-4 items-center">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-primary"></span>
-                <span className="font-label-md text-label-md text-on-surface-variant">Income</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-surface-container-highest"></span>
-                <span className="font-label-md text-label-md text-on-surface-variant">Expenses</span>
-              </div>
-            </div>
           </div>
           <div className="flex-1 min-h-[250px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'Inter' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => `₱${val}`} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => `${currency}${val}`} />
                 <Tooltip 
                   cursor={{ fill: 'var(--surface-container-low)' }}
                   contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
                   itemStyle={{ fontFamily: 'JetBrains Mono' }}
+                  formatter={(val: number) => `${currency}${val.toFixed(2)}`}
                 />
                 <Bar dataKey="income" fill="var(--primary)" radius={[2, 2, 0, 0]} />
                 <Bar dataKey="expense" fill="var(--surface-container-highest)" radius={[2, 2, 0, 0]} />
@@ -171,6 +151,7 @@ export const Dashboard: React.FC = () => {
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
                       itemStyle={{ fontFamily: 'JetBrains Mono' }}
+                      formatter={(val: number) => `${currency}${val.toFixed(2)}`}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -218,9 +199,15 @@ export const Dashboard: React.FC = () => {
                       </span>
                     </td>
                     <td className={cn("py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
-                      {tx.type === 'income' ? '+' : '-'}₱{Math.abs(tx.amount).toFixed(2)}
+                      {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </Card>
-      </div>
+      </section>
     </div>
   );
 };

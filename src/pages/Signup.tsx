@@ -4,27 +4,30 @@ import { supabase } from '../services/supabase';
 import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
+import { useAuthStore } from '../store/authStore';
 
 export const Signup: React.FC = () => {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const signUp = useAuthStore((state) => state.signUp);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    
     setLoading(true);
     setError(null);
-
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) throw error;
+      await signUp(email, password, fullName);
       setSuccess(true);
     } catch (err: any) {
       setError(err.message || 'An error occurred during sign up');
@@ -58,7 +61,15 @@ export const Signup: React.FC = () => {
               </Button>
             </div>
           ) : (
-            <form onSubmit={handleSignup} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                label="Full Name"
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="John Doe"
+                required
+              />
               <Input
                 label="Email"
                 type="email"
@@ -75,6 +86,14 @@ export const Signup: React.FC = () => {
                 placeholder="Create a strong password"
                 required
                 minLength={6}
+              />
+              <Input
+                label="Confirm Password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+                required
               />
 
               {error && (

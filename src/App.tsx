@@ -10,15 +10,23 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { useAuthStore } from './store/authStore';
 import { useThemeStore } from './store/themeStore';
+import { useProfileStore } from './store/profileStore';
 
 function App() {
   const initialize = useAuthStore((state) => state.initialize);
-  const user = useAuthStore((state) => state.user);
+  const { session, user, loading } = useAuthStore();
   const { isDarkMode } = useThemeStore();
+  const { fetchProfile } = useProfileStore();
 
   useEffect(() => {
     initialize();
   }, [initialize]);
+
+  useEffect(() => {
+    if (session) {
+      fetchProfile();
+    }
+  }, [session, fetchProfile]);
 
   useEffect(() => {
     if (isDarkMode) {
