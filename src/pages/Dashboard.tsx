@@ -7,7 +7,7 @@ import { useProfileStore } from '../store/profileStore';
 import { Icon } from '../components/ui/Icon';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useNotificationStore } from '../store/notificationStore';
-import { cn } from '../lib/utils';
+import { cn, CATEGORY_THEMES } from '../lib/utils';
 import {
   DndContext,
   closestCenter,
@@ -221,15 +221,15 @@ export const Dashboard: React.FC = () => {
               </div>
             ) : categoryData.length > 0 ? (
               <div className="flex-1 w-full min-h-[250px] flex items-center justify-between px-2 sm:px-4">
-                <div className="w-[55%] h-full relative">
+                <div className="w-[50%] h-full relative -ml-4">
                   <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
                       <Pie
                         data={categoryData}
                         cx="50%"
                         cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
+                        innerRadius={55}
+                        outerRadius={75}
                         paddingAngle={5}
                         dataKey="value"
                         stroke="none"
@@ -249,7 +249,7 @@ export const Dashboard: React.FC = () => {
                     <span className="font-data-mono font-bold text-lg text-on-surface">100%</span>
                   </div>
                 </div>
-                <div className="w-[45%] flex flex-col gap-3 justify-center pl-2 sm:pl-4 border-l border-surface-container-low">
+                <div className="w-[50%] flex flex-col gap-3 justify-center pl-2 sm:pl-4 border-l border-surface-container-low">
                   {categoryData.slice(0, 5).map((entry, index) => (
                     <div key={index} className="flex items-center justify-between gap-1">
                       <div className="flex items-center gap-2 overflow-hidden">
@@ -354,7 +354,10 @@ export const Dashboard: React.FC = () => {
                       <td className="py-4">{tx.date}</td>
                       <td className="py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
                       <td className="py-4">
-                        <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
+                        <span className={cn(
+                          "inline-block px-2 py-1 font-label-md text-[10px] rounded uppercase tracking-wider",
+                          CATEGORY_THEMES[tx.category] || CATEGORY_THEMES['Other']
+                        )}>
                           {tx.category}
                         </span>
                       </td>
