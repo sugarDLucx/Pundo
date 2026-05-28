@@ -13,7 +13,20 @@ export const AppLayout: React.FC = () => {
   const { signOut, user } = useAuthStore();
   const { profile } = useProfileStore();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (profile?.language) {
+      const i18nCode = profile.language === 'English (United States)' ? 'en' : profile.language === 'Spanish (Spain)' ? 'es' : 'fr';
+      if (i18n.language !== i18nCode) {
+        i18n.changeLanguage(i18nCode);
+      }
+    }
+  }, [profile?.language, i18n]);
 
   const navItems = [
     { name: t('sidebar.dashboard', 'Dashboard'), href: '/', icon: 'dashboard' },
