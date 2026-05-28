@@ -249,8 +249,23 @@ export const Settings: React.FC = () => {
                     onChange={(e) => handleLanguageChange(e.target.value)}
                   >
                     <option value="English (United States)">English (United States)</option>
+                    <option value="English (United Kingdom)">English (United Kingdom)</option>
                     <option value="Spanish (Spain)">Spanish (Spain)</option>
+                    <option value="Spanish (Latin America)">Spanish (Latin America)</option>
                     <option value="French (France)">French (France)</option>
+                    <option value="French (Canada)">French (Canada)</option>
+                    <option value="German (Germany)">German (Germany)</option>
+                    <option value="Italian (Italy)">Italian (Italy)</option>
+                    <option value="Portuguese (Brazil)">Portuguese (Brazil)</option>
+                    <option value="Portuguese (Portugal)">Portuguese (Portugal)</option>
+                    <option value="Japanese (Japan)">Japanese (Japan)</option>
+                    <option value="Korean (South Korea)">Korean (South Korea)</option>
+                    <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+                    <option value="Chinese (Traditional)">Chinese (Traditional)</option>
+                    <option value="Russian (Russia)">Russian (Russia)</option>
+                    <option value="Hindi (India)">Hindi (India)</option>
+                    <option value="Arabic (UAE)">Arabic (UAE)</option>
+                    <option value="Filipino (Philippines)">Filipino (Philippines)</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
                     <Icon name="expand_more" />
@@ -269,6 +284,21 @@ export const Settings: React.FC = () => {
                     <option value="$">USD ($) - US Dollar</option>
                     <option value="€">EUR (€) - Euro</option>
                     <option value="£">GBP (£) - British Pound</option>
+                    <option value="¥">JPY (¥) - Japanese Yen</option>
+                    <option value="A$">AUD (A$) - Australian Dollar</option>
+                    <option value="C$">CAD (C$) - Canadian Dollar</option>
+                    <option value="CHF">CHF - Swiss Franc</option>
+                    <option value="¥">CNY (¥) - Chinese Yuan</option>
+                    <option value="₹">INR (₹) - Indian Rupee</option>
+                    <option value="R$">BRL (R$) - Brazilian Real</option>
+                    <option value="₩">KRW (₩) - South Korean Won</option>
+                    <option value="S$">SGD (S$) - Singapore Dollar</option>
+                    <option value="HK$">HKD (HK$) - Hong Kong Dollar</option>
+                    <option value="nz$">NZD (NZ$) - New Zealand Dollar</option>
+                    <option value="₽">RUB (₽) - Russian Ruble</option>
+                    <option value="₹">IDR (Rp) - Indonesian Rupiah</option>
+                    <option value="RM">MYR (RM) - Malaysian Ringgit</option>
+                    <option value="฿">THB (฿) - Thai Baht</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
                     <Icon name="expand_more" />

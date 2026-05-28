@@ -193,7 +193,7 @@ export const Dashboard: React.FC = () => {
                     formatter={(val: number) => `${currency}${val.toFixed(2)}`}
                   />
                   <Bar dataKey="income" fill="var(--primary)" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="expense" fill="var(--surface-container-highest)" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="expense" fill="var(--tertiary)" radius={[2, 2, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
