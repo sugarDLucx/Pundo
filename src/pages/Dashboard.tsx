@@ -245,50 +245,82 @@ export const Dashboard: React.FC = () => {
     ),
     transactions: (
       <section>
-        <Card className="overflow-x-auto">
-          <div className="flex justify-between items-center mb-4 min-w-[600px]">
+        <Card className="overflow-x-auto p-4 md:p-6">
+          <div className="flex justify-between items-center mb-4 min-w-full">
             <h3 className="font-headline-sm text-headline-sm text-on-surface">Recent Transactions</h3>
           </div>
-          <table className="w-full text-left min-w-[600px]">
-            <thead>
-              <tr className="border-b border-surface-container-low text-on-surface-variant font-label-md text-label-md">
-                <th className="pb-3 font-medium">Date</th>
-                <th className="pb-3 font-medium">Description</th>
-                <th className="pb-3 font-medium">Category</th>
-                <th className="pb-3 font-medium text-right">Amount</th>
-              </tr>
-            </thead>
-            <tbody className="font-body-sm text-body-sm text-on-surface">
-              {loading && transactions.length === 0 ? (
-                <>
-                  {[...Array(3)].map((_, i) => (
-                    <tr key={i} className="border-b border-surface-container-lowest last:border-0">
-                      <td colSpan={4} className="py-3"><Skeleton className="h-8 w-full" /></td>
-                    </tr>
-                  ))}
-                </>
-              ) : transactions.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="text-center text-on-surface-variant py-4">No transactions yet</td>
+          
+          {/* Desktop Table View */}
+          <div className="hidden md:block">
+            <table className="w-full text-left min-w-[600px]">
+              <thead>
+                <tr className="border-b border-surface-container-low text-on-surface-variant font-label-md text-label-md">
+                  <th className="pb-3 font-medium">Date</th>
+                  <th className="pb-3 font-medium">Description</th>
+                  <th className="pb-3 font-medium">Category</th>
+                  <th className="pb-3 font-medium text-right">Amount</th>
                 </tr>
-              ) : (
-                transactions.slice(0, 5).map((tx) => (
-                  <tr key={tx.id} className="border-b border-surface-container-lowest hover:bg-surface-container-low transition-colors group cursor-pointer last:border-0">
-                    <td className="py-4">{tx.date}</td>
-                    <td className="py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
-                    <td className="py-4">
-                      <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
-                        {tx.category}
-                      </span>
-                    </td>
-                    <td className={cn("py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
-                      {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
-                    </td>
+              </thead>
+              <tbody className="font-body-sm text-body-sm text-on-surface">
+                {loading && transactions.length === 0 ? (
+                  <>
+                    {[...Array(3)].map((_, i) => (
+                      <tr key={i} className="border-b border-surface-container-lowest last:border-0">
+                        <td colSpan={4} className="py-3"><Skeleton className="h-8 w-full" /></td>
+                      </tr>
+                    ))}
+                  </>
+                ) : transactions.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="text-center text-on-surface-variant py-4">No transactions yet</td>
                   </tr>
+                ) : (
+                  transactions.slice(0, 5).map((tx) => (
+                    <tr key={tx.id} className="border-b border-surface-container-lowest hover:bg-surface-container-low transition-colors group cursor-pointer last:border-0">
+                      <td className="py-4">{tx.date}</td>
+                      <td className="py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
+                      <td className="py-4">
+                        <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
+                          {tx.category}
+                        </span>
+                      </td>
+                      <td className={cn("py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
+                        {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-3">
+             {loading && transactions.length === 0 ? (
+                [...Array(3)].map((_, i) => (
+                   <Skeleton key={i} className="h-20 w-full rounded-xl" />
                 ))
-              )}
-            </tbody>
-          </table>
+             ) : transactions.length === 0 ? (
+                <div className="text-center text-on-surface-variant py-4">No transactions yet</div>
+             ) : (
+                transactions.slice(0, 5).map((tx) => (
+                  <div key={tx.id} className="p-4 rounded-xl bg-surface-container-lowest border border-surface-container-low flex justify-between items-center shadow-sm">
+                    <div>
+                      <p className="font-medium text-on-surface text-body-md mb-1">{tx.note || '—'}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block px-2 py-0.5 bg-surface-container-high text-on-surface-variant font-label-sm text-[10px] rounded uppercase tracking-wider">
+                          {tx.category}
+                        </span>
+                        <span className="font-body-sm text-on-surface-variant text-xs">{tx.date}</span>
+                      </div>
+                    </div>
+                    <div className={cn("font-data-mono font-medium text-lg", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
+                      {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
+                    </div>
+                  </div>
+                ))
+             )}
+          </div>
         </Card>
       </section>
     )

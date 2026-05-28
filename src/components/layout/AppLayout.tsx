@@ -94,8 +94,8 @@ export const AppLayout: React.FC = () => {
         </div>
       </aside>
 
-      {/* Mobile Navigation */}
-      <nav className="md:hidden w-full h-16 sticky top-0 z-40 bg-surface/80 backdrop-blur-xl shadow-sm flex justify-between items-center px-4 border-b border-surface-container-low">
+      {/* Mobile Navigation Header */}
+      <nav className="md:hidden w-full h-16 sticky top-0 z-50 bg-surface/80 backdrop-blur-xl shadow-sm flex justify-between items-center px-4 border-b border-surface-container-low">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 rounded-lg bg-primary-container overflow-hidden shrink-0 flex items-center justify-center text-primary">
             {profile?.avatar_url ? (
@@ -108,10 +108,66 @@ export const AppLayout: React.FC = () => {
             <span className="font-headline-sm text-headline-sm font-bold text-primary tracking-tight truncate">{lastName}</span>
           </div>
         </div>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 relative z-50">
           {mobileMenuOpen ? <X /> : <Menu />}
         </button>
       </nav>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="md:hidden fixed inset-0 z-40 bg-scrim/20 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-x-0 top-16 z-40 bg-surface/95 backdrop-blur-xl border-b border-surface-container-low shadow-lg"
+            >
+              <div className="flex flex-col p-4 space-y-2">
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-body-md text-body-md",
+                        isActive
+                          ? "text-primary font-bold bg-surface-container-high"
+                          : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high"
+                      )
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <Icon name={item.icon} fill={isActive} />
+                        <span>{item.name}</span>
+                      </>
+                    )}
+                  </NavLink>
+                ))}
+                <div className="pt-2 mt-2 border-t border-surface-container-low">
+                  <button
+                    onClick={signOut}
+                    className="flex w-full items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-error-container/30 hover:text-error transition-colors font-body-md text-body-md"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    <span>{t('sidebar.logout', 'Log out')}</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Header (Hidden as we now use Mobile Navigation) */}
       <div className="flex flex-1 flex-col overflow-hidden md:ml-64">

@@ -149,23 +149,23 @@ export const Settings: React.FC = () => {
         <p className="font-body-lg text-body-lg text-on-surface-variant">{t('settings.subtitle', 'Manage your account preferences, security, and notifications.')}</p>
       </header>
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 flex-1 pb-32">
-        <aside className="w-full lg:w-64 flex-shrink-0">
-          <nav className="sticky top-24 bg-surface-container-lowest rounded-xl shadow-sm p-3 border border-surface-container-low">
-            <ul className="space-y-1">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 flex-1 pb-32">
+        <aside className="w-full lg:w-64 flex-shrink-0 z-30 sticky top-16 lg:top-24 bg-background pt-2 pb-2 lg:p-0">
+          <nav className="lg:sticky lg:top-24 bg-surface-container-lowest lg:rounded-xl shadow-sm lg:p-3 border-y lg:border border-surface-container-low -mx-4 px-4 lg:mx-0 overflow-x-auto no-scrollbar">
+            <ul className="flex flex-row lg:flex-col space-x-2 lg:space-x-0 lg:space-y-1 w-max lg:w-auto py-3 lg:py-0">
               {menuItems.map(item => (
-                <li key={item.id}>
+                <li key={item.id} className="shrink-0">
                   <button
                     onClick={() => handleScrollTo(item.id)}
                     className={cn(
-                      "flex w-full items-center space-x-3 px-4 py-3 rounded-lg font-body-md text-body-md transition-colors",
+                      "flex w-full items-center space-x-2 lg:space-x-3 px-4 py-2.5 lg:py-3 rounded-full lg:rounded-lg font-body-md text-body-md transition-colors",
                       activeSection === item.id 
-                        ? "bg-surface-container-low text-primary font-medium" 
-                        : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface"
+                        ? "bg-primary-container text-primary font-bold" 
+                        : "text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface bg-surface border lg:border-transparent border-surface-container-high"
                     )}
                   >
-                    <Icon name={item.icon} />
-                    <span>{item.label}</span>
+                    <Icon name={item.icon} className="text-[18px] lg:text-[24px]" />
+                    <span className="whitespace-nowrap">{item.label}</span>
                   </button>
                 </li>
               ))}

@@ -39,63 +39,109 @@ export const Transactions: React.FC = () => {
         </Button>
       </header>
 
-      <Card className="overflow-x-auto p-0">
-        <table className="w-full text-left min-w-[700px]">
-          <thead>
-            <tr className="border-b border-surface-container-low text-on-surface-variant font-label-md text-label-md bg-surface-container-lowest">
-              <th className="px-6 py-4 font-medium">Date</th>
-              <th className="px-6 py-4 font-medium">Description</th>
-              <th className="px-6 py-4 font-medium">Category</th>
-              <th className="px-6 py-4 font-medium">Status</th>
-              <th className="px-6 py-4 font-medium text-right">Amount</th>
-              <th className="px-6 py-4 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="font-body-md text-body-md text-on-surface">
-            {loading && transactions.length === 0 ? (
-              <>
-                {[...Array(5)].map((_, i) => (
-                  <tr key={i} className="border-b border-surface-container-lowest last:border-0">
-                    <td colSpan={5} className="py-4"><Skeleton className="h-8 w-full" /></td>
-                  </tr>
-                ))}
-              </>
-            ) : transactions.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center text-on-surface-variant py-8">No transactions found. Click 'Add Transaction' to start.</td>
+      <Card className="overflow-x-auto p-4 md:p-6 bg-surface-container-lowest md:bg-surface">
+        {/* Desktop Table View */}
+        <div className="hidden md:block">
+          <table className="w-full text-left min-w-[700px]">
+            <thead>
+              <tr className="border-b border-surface-container-low text-on-surface-variant font-label-md text-label-md bg-surface-container-lowest">
+                <th className="px-6 py-4 font-medium">Date</th>
+                <th className="px-6 py-4 font-medium">Description</th>
+                <th className="px-6 py-4 font-medium">Category</th>
+                <th className="px-6 py-4 font-medium">Status</th>
+                <th className="px-6 py-4 font-medium text-right">Amount</th>
+                <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
-            ) : (
-              transactions.map((tx) => (
-                <tr key={tx.id} className="border-b border-surface-container-lowest hover:bg-surface-container-low transition-colors group">
-                  <td className="px-6 py-4">{tx.date}</td>
-                  <td className="px-6 py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
-                      {tx.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="flex items-center gap-1 text-tertiary text-label-md">
-                      <Icon name="check_circle" className="text-[14px]" /> Completed
-                    </span>
-                  </td>
-                  <td className={cn("px-6 py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
-                    {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button
-                      onClick={() => handleDelete(tx.id)}
-                      className="text-on-surface-variant hover:text-error transition-colors p-2 rounded-full hover:bg-error-container/30"
-                      title="Delete"
-                    >
-                      <Icon name="delete" className="text-[18px]" />
-                    </button>
-                  </td>
+            </thead>
+            <tbody className="font-body-md text-body-md text-on-surface">
+              {loading && transactions.length === 0 ? (
+                <>
+                  {[...Array(5)].map((_, i) => (
+                    <tr key={i} className="border-b border-surface-container-lowest last:border-0">
+                      <td colSpan={6} className="py-4"><Skeleton className="h-8 w-full" /></td>
+                    </tr>
+                  ))}
+                </>
+              ) : transactions.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center text-on-surface-variant py-8">No transactions found. Click 'Add Transaction' to start.</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                transactions.map((tx) => (
+                  <tr key={tx.id} className="border-b border-surface-container-lowest hover:bg-surface-container-low transition-colors group">
+                    <td className="px-6 py-4">{tx.date}</td>
+                    <td className="px-6 py-4 font-medium group-hover:text-primary transition-colors">{tx.note || '—'}</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-block px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-md text-[10px] rounded uppercase tracking-wider">
+                        {tx.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="flex items-center gap-1 text-tertiary text-label-md">
+                        <Icon name="check_circle" className="text-[14px]" /> Completed
+                      </span>
+                    </td>
+                    <td className={cn("px-6 py-4 text-right font-data-mono font-medium", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
+                      {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleDelete(tx.id)}
+                        className="text-on-surface-variant hover:text-error transition-colors p-2 rounded-full hover:bg-error-container/30"
+                        title="Delete"
+                      >
+                        <Icon name="delete" className="text-[18px]" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {loading && transactions.length === 0 ? (
+             [...Array(5)].map((_, i) => (
+                <Skeleton key={i} className="h-24 w-full rounded-xl" />
+             ))
+          ) : transactions.length === 0 ? (
+             <div className="text-center text-on-surface-variant py-8">No transactions found. Click 'Add Transaction' to start.</div>
+          ) : (
+             transactions.map((tx) => (
+               <div key={tx.id} className="p-4 rounded-xl bg-surface-container border border-surface-container-low flex flex-col gap-3 shadow-sm">
+                 <div className="flex justify-between items-start">
+                   <div>
+                     <p className="font-medium text-on-surface text-body-lg mb-1 leading-tight">{tx.note || '—'}</p>
+                     <p className="font-body-sm text-on-surface-variant">{tx.date}</p>
+                   </div>
+                   <div className={cn("font-data-mono font-medium text-xl", tx.type === 'income' ? 'text-tertiary' : 'text-on-surface')}>
+                     {tx.type === 'income' ? '+' : '-'}{currency}{Math.abs(tx.amount).toFixed(2)}
+                   </div>
+                 </div>
+                 
+                 <div className="flex justify-between items-center pt-3 border-t border-surface-container-highest">
+                   <div className="flex items-center gap-2">
+                     <span className="inline-block px-2 py-0.5 bg-surface-container-high text-on-surface-variant font-label-sm text-[10px] rounded uppercase tracking-wider">
+                       {tx.category}
+                     </span>
+                     <span className="flex items-center gap-1 text-tertiary text-label-sm">
+                       <Icon name="check_circle" className="text-[12px]" /> Done
+                     </span>
+                   </div>
+                   <button
+                     onClick={() => handleDelete(tx.id)}
+                     className="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors"
+                     title="Delete"
+                   >
+                     <Icon name="delete" className="text-[18px]" />
+                   </button>
+                 </div>
+               </div>
+             ))
+          )}
+        </div>
       </Card>
 
       <Modal
