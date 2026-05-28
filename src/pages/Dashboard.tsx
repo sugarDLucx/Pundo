@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Card } from '../components/ui/Card';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, PieChart, Pie } from 'recharts';
 import { useTransactionStore } from '../store/transactionStore';
+import { useGoalStore } from '../store/goalStore';
 import { useProfileStore } from '../store/profileStore';
 import { Icon } from '../components/ui/Icon';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -51,15 +52,17 @@ function SortableSection({ id, children }: { id: string, children: React.ReactNo
 
 export const Dashboard: React.FC = () => {
   const { transactions, loading, fetchTransactions } = useTransactionStore();
+  const { goals, loading: goalsLoading, fetchGoals } = useGoalStore();
   const { profile, updateProfile } = useProfileStore();
   const addNotification = useNotificationStore((state) => state.addNotification);
   const currency = profile?.currency || '₱';
 
-  const [layout, setLayout] = useState<string[]>(['overview', 'charts', 'transactions']);
+  const [layout, setLayout] = useState<string[]>(['overview', 'charts', 'goals', 'transactions']);
   const [timeframe, setTimeframe] = useState<number>(6);
 
   useEffect(() => {
     fetchTransactions();
+    fetchGoals();
     
     // Welcome Notification Logic
     const hasSeenWelcome = localStorage.getItem('hasSeenWelcome_v1');
@@ -217,30 +220,48 @@ export const Dashboard: React.FC = () => {
                 <Skeleton className="w-48 h-48 rounded-full" />
               </div>
             ) : categoryData.length > 0 ? (
-              <div className="flex-1 w-full min-h-[250px]">
-                <ResponsiveContainer width="100%" height={250}>
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={80}
-                      paddingAngle={5}
-                      dataKey="value"
-                      stroke="none"
-                    >
-                      {categoryData.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
-                      itemStyle={{ fontFamily: 'JetBrains Mono' }}
-                      formatter={(val: any) => `${currency}${Number(val).toFixed(2)}`}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
+              <div className="flex-1 w-full min-h-[250px] flex items-center justify-between px-2 sm:px-4">
+                <div className="w-[55%] h-full relative">
+                  <ResponsiveContainer width="100%" height={250}>
+                    <PieChart>
+                      <Pie
+                        data={categoryData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={80}
+                        paddingAngle={5}
+                        dataKey="value"
+                        stroke="none"
+                      >
+                        {categoryData.map((_, index) => (
+                          <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
+                        itemStyle={{ fontFamily: 'JetBrains Mono' }}
+                        formatter={(val: any) => `${currency}${Number(val).toFixed(2)}`}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span className="font-data-mono font-bold text-lg text-on-surface">100%</span>
+                  </div>
+                </div>
+                <div className="w-[45%] flex flex-col gap-3 justify-center pl-2 sm:pl-4 border-l border-surface-container-low">
+                  {categoryData.slice(0, 5).map((entry, index) => (
+                    <div key={index} className="flex items-center justify-between gap-1">
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }} />
+                        <span className="font-label-md text-on-surface-variant truncate" title={entry.name}>{entry.name}</span>
+                      </div>
+                      <span className="font-data-mono text-on-surface font-bold text-sm shrink-0">
+                        {Math.round((entry.value / totalExpense) * 100)}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="flex-1 flex items-center justify-center text-on-surface-variant font-label-md">
@@ -249,6 +270,51 @@ export const Dashboard: React.FC = () => {
             )}
           </Card>
         </div>
+      </section>
+    ),
+    goals: (
+      <section>
+        <Card className="flex flex-col gap-4">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="font-headline-sm text-headline-sm text-on-surface">Financial Goals</h3>
+            <a href="/goals" className="text-primary font-label-md hover:underline">View All</a>
+          </div>
+          {goalsLoading && goals.length === 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-32 w-full hidden md:block" />
+            </div>
+          ) : goals.length === 0 ? (
+            <div className="py-6 text-center text-on-surface-variant font-label-md">
+              No active goals. Start saving today!
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {goals.slice(0, 2).map((goal) => {
+                const percentage = Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100));
+                return (
+                  <div key={goal.id} className="bg-surface-container-lowest border border-surface-container-low rounded-xl p-4 flex flex-col gap-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-label-lg text-label-lg font-bold text-on-surface truncate">{goal.name}</h4>
+                        <p className="font-label-sm text-label-sm text-on-surface-variant mt-1 font-data-mono">
+                          {currency}{goal.current_amount.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} / {currency}{goal.target_amount.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}
+                        </p>
+                      </div>
+                      <span className="font-label-md text-primary font-bold">{percentage}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-primary rounded-full transition-all duration-1000 ease-out" 
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Card>
       </section>
     ),
     transactions: (

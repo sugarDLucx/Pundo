@@ -10,6 +10,7 @@ import { useProfileStore } from '../store/profileStore';
 import { ProgressBar } from '../components/ui/ProgressBar';
 import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
+import { format, differenceInMonths, differenceInDays } from 'date-fns';
 
 export const Goals: React.FC = () => {
   const { goals, loading, fetchGoals, deleteGoal } = useGoalStore();
@@ -35,6 +36,35 @@ export const Goals: React.FC = () => {
     return 'text-on-surface-variant';
   };
 
+  const totalSaved = goals.reduce((acc, goal) => acc + goal.current_amount, 0);
+  const activeGoalsCount = goals.length;
+  
+  let onTrackCount = 0;
+  let needsAttentionCount = 0;
+
+  goals.forEach(goal => {
+    const percentage = (goal.current_amount / goal.target_amount) * 100;
+    if (percentage >= 100) {
+      onTrackCount++;
+      return;
+    }
+    
+    // Calculate elapsed time vs target time
+    const startDate = goal.created_at ? new Date(goal.created_at) : new Date(); // fallback to now if missing
+    const targetDate = new Date(goal.target_date);
+    const currentDate = new Date();
+    
+    const totalDays = differenceInDays(targetDate, startDate) || 1;
+    const elapsedDays = differenceInDays(currentDate, startDate);
+    const timePercentage = Math.min(100, Math.max(0, (elapsedDays / totalDays) * 100));
+
+    if (percentage >= timePercentage) {
+      onTrackCount++;
+    } else {
+      needsAttentionCount++;
+    }
+  });
+
   return (
     <div className="space-y-6">
       <header className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
@@ -47,6 +77,25 @@ export const Goals: React.FC = () => {
           Create Goal
         </Button>
       </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <Card className="flex flex-col justify-center">
+          <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Total Saved Towards Goals</h3>
+          <div className="font-headline-lg text-4xl sm:text-5xl font-data-mono text-on-surface mb-2">
+            {currency}{totalSaved.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+          </div>
+        </Card>
+        <Card className="flex flex-col justify-center">
+          <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Active Goals</h3>
+          <div className="font-headline-lg text-4xl sm:text-5xl font-data-mono text-on-surface mb-3">
+            {activeGoalsCount}
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            <span className="bg-primary/20 text-primary px-3 py-1 rounded-full font-label-sm">On Track: {onTrackCount}</span>
+            <span className="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-sm">Needs Attention: {needsAttentionCount}</span>
+          </div>
+        </Card>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {loading && goals.length === 0 ? (
@@ -63,6 +112,11 @@ export const Goals: React.FC = () => {
             const percentage = Math.min(100, Math.round((goal.current_amount / goal.target_amount) * 100));
             const isCompleted = percentage >= 100;
             const progressColorText = getProgressColor(goal.current_amount, goal.target_amount);
+            
+            const targetDate = new Date(goal.target_date);
+            const monthsRemaining = Math.max(1, differenceInMonths(targetDate, new Date()));
+            const amountNeeded = Math.max(0, goal.target_amount - goal.current_amount);
+            const monthlyAmount = amountNeeded / monthsRemaining;
 
             return (
               <Card key={goal.id} className="flex flex-col gap-6 relative">
@@ -103,6 +157,18 @@ export const Goals: React.FC = () => {
                     value={percentage} 
                     variant={isCompleted ? 'success' : 'primary'} 
                   />
+                </div>
+
+                <div className="flex justify-between items-center mt-2 pt-4 border-t border-surface-container-low">
+                  <div className="flex items-center gap-2 text-on-surface-variant font-label-md">
+                    <Icon name="calendar_today" className="text-[16px]" />
+                    {format(targetDate, 'MMM yyyy')}
+                  </div>
+                  {!isCompleted && (
+                    <div className="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full font-label-sm font-data-mono">
+                      +{currency}{monthlyAmount.toFixed(0)}/mo
+                    </div>
+                  )}
                 </div>
 
                 <Button
