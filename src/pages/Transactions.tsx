@@ -5,6 +5,7 @@ import { Badge } from '../components/ui/Badge';
 import { Modal } from '../components/ui/Modal';
 import { Icon } from '../components/ui/Icon';
 import { TransactionForm } from '../components/transactions/TransactionForm';
+import { Skeleton } from '../components/ui/Skeleton';
 import { useTransactionStore } from '../store/transactionStore';
 import { useProfileStore } from '../store/profileStore';
 import { cn } from '../lib/utils';
@@ -50,11 +51,15 @@ export const Transactions: React.FC = () => {
               <th className="px-6 py-4 font-medium text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="font-body-sm text-body-sm text-on-surface">
+          <tbody className="font-body-md text-body-md text-on-surface">
             {loading && transactions.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center text-on-surface-variant py-8">Loading transactions...</td>
-              </tr>
+              <>
+                {[...Array(5)].map((_, i) => (
+                  <tr key={i} className="border-b border-surface-container-lowest last:border-0">
+                    <td colSpan={5} className="py-4"><Skeleton className="h-8 w-full" /></td>
+                  </tr>
+                ))}
+              </>
             ) : transactions.length === 0 ? (
               <tr>
                 <td colSpan={6} className="text-center text-on-surface-variant py-8">No transactions found. Click 'Add Transaction' to start.</td>

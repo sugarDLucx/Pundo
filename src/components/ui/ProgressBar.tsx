@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
+import { motion } from 'framer-motion';
 
 interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
   value: number; // 0 to 100
@@ -20,12 +21,14 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     return (
       <div
         ref={ref}
-        className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-container-high", className)}
+        className={cn("w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden", className)}
         {...props}
       >
-        <div
-          className={cn("h-full rounded-full transition-all duration-500 ease-out", variants[variant])}
-          style={{ width: `${clampedValue}%` }}
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${clampedValue}%` }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className={cn("h-2.5 rounded-full", variants[variant])}
         />
       </div>
     );

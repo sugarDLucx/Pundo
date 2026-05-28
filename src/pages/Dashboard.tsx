@@ -1,26 +1,93 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card } from '../components/ui/Card';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, PieChart, Pie } from 'recharts';
 import { useTransactionStore } from '../store/transactionStore';
 import { useProfileStore } from '../store/profileStore';
 import { Icon } from '../components/ui/Icon';
+import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+function SortableSection({ id, children }: { id: string, children: React.ReactNode }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : 1,
+    opacity: isDragging ? 0.8 : 1,
+    position: 'relative' as const,
+  };
+  return (
+    <div ref={setNodeRef} style={style} className="group/section relative mb-6">
+      <div 
+        className="absolute -left-6 top-1/2 -translate-y-1/2 p-1 cursor-grab active:cursor-grabbing text-surface-container hover:text-on-surface-variant transition-colors z-20 hidden md:block opacity-0 group-hover/section:opacity-100" 
+        {...attributes} 
+        {...listeners}
+      >
+        <Icon name="drag_indicator" />
+      </div>
+      <div>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export const Dashboard: React.FC = () => {
   const { transactions, loading, fetchTransactions } = useTransactionStore();
-  const { profile } = useProfileStore();
+  const { profile, updateProfile } = useProfileStore();
   const currency = profile?.currency || '₱';
+
+  const [layout, setLayout] = useState<string[]>(['overview', 'charts', 'transactions']);
+  const [timeframe, setTimeframe] = useState<number>(6);
 
   useEffect(() => {
     fetchTransactions();
   }, [fetchTransactions]);
+
+  useEffect(() => {
+    if (profile?.dashboard_layout && Array.isArray(profile.dashboard_layout) && profile.dashboard_layout.length > 0) {
+      setLayout(profile.dashboard_layout);
+    }
+  }, [profile?.dashboard_layout]);
+
+  const handleDragEnd = async (event: any) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = layout.indexOf(active.id as string);
+      const newIndex = layout.indexOf(over.id as string);
+      const newLayout = arrayMove(layout, oldIndex, newIndex);
+      setLayout(newLayout);
+      await updateProfile({ dashboard_layout: newLayout });
+    }
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
 
   const { totalIncome, totalExpense, balance, chartData, categoryData } = useMemo(() => {
     let inc = 0;
     let exp = 0;
     const categories: Record<string, number> = {};
     const now = new Date();
-    const last6Months = Array.from({ length: 6 }, (_, i) => {
+    const chartMonths = Array.from({ length: timeframe }, (_, i) => {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
       return {
         monthIndex: d.getMonth(),
@@ -40,7 +107,7 @@ export const Dashboard: React.FC = () => {
       }
 
       const txDate = new Date(tx.date);
-      const mData = last6Months.find(m => m.monthIndex === txDate.getMonth() && m.year === txDate.getFullYear());
+      const mData = chartMonths.find(m => m.monthIndex === txDate.getMonth() && m.year === txDate.getFullYear());
       if (mData) {
         if (tx.type === 'income') mData.income += tx.amount;
         else mData.expense += tx.amount;
@@ -51,23 +118,16 @@ export const Dashboard: React.FC = () => {
       totalIncome: inc,
       totalExpense: exp,
       balance: inc - exp,
-      chartData: last6Months,
+      chartData: chartMonths,
       categoryData: Object.entries(categories).map(([name, value]) => ({ name, value }))
     };
-  }, [transactions]);
+  }, [transactions, timeframe]);
 
   const CHART_COLORS = ['var(--primary)', 'var(--tertiary)', 'var(--surface-container-highest)', 'var(--error)'];
 
-  return (
-    <div className="space-y-6">
-      <header className="mb-8 flex justify-between items-end">
-        <div>
-          <h2 className="font-headline-lg text-headline-lg text-on-surface">Overview</h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Here's your fiscal health at a glance.</p>
-        </div>
-      </header>
-
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+  const sections: Record<string, React.ReactNode> = {
+    overview: (
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="flex flex-col justify-between h-32 relative overflow-hidden group">
           <div className="absolute -right-4 -top-4 w-24 h-24 bg-surface-container rounded-full opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
           <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2 z-10">
@@ -75,62 +135,80 @@ export const Dashboard: React.FC = () => {
             Total Balance
           </h3>
           <div className="font-display-lg text-4xl sm:text-5xl font-data-mono text-primary z-10 tracking-tight">
-            {balance < 0 ? '-' : ''}{currency}{Math.abs(balance).toFixed(2)}
+            {loading ? <Skeleton className="h-10 w-32 mt-2" /> : <>{balance < 0 ? '-' : ''}{currency}{Math.abs(balance).toFixed(2)}</>}
           </div>
         </Card>
 
         <Card className="flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-              <Icon name="arrow_upward" className="text-tertiary" />
-              Total Income
-            </h3>
-          </div>
+          <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+            <Icon name="arrow_upward" className="text-tertiary" />
+            Total Income
+          </h3>
           <div className="font-headline-lg text-3xl sm:text-4xl font-data-mono text-on-surface">
-            {currency}{totalIncome.toFixed(2)}
+            {loading ? <Skeleton className="h-8 w-28 mt-2" /> : <>{currency}{totalIncome.toFixed(2)}</>}
           </div>
         </Card>
 
         <Card className="flex flex-col justify-between h-32">
-          <div className="flex justify-between items-start">
-            <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-              <Icon name="arrow_downward" className="text-error" />
-              Total Expenses
-            </h3>
-          </div>
+          <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+            <Icon name="arrow_downward" className="text-error" />
+            Total Expenses
+          </h3>
           <div className="font-headline-lg text-3xl sm:text-4xl font-data-mono text-on-surface">
-            {currency}{totalExpense.toFixed(2)}
+            {loading ? <Skeleton className="h-8 w-28 mt-2" /> : <>{currency}{totalExpense.toFixed(2)}</>}
           </div>
         </Card>
       </section>
-
-      <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+    ),
+    charts: (
+      <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <Card className="xl:col-span-2 min-h-[320px] flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-headline-sm text-headline-sm text-on-surface">Income vs Expenses</h3>
+            <select 
+              value={timeframe} 
+              onChange={e => setTimeframe(Number(e.target.value))}
+              className="bg-surface-container-low text-on-surface border-none rounded-lg px-3 py-1 font-body-sm focus:outline-none focus:ring-1 focus:ring-primary"
+            >
+              <option value={3}>Last 3 Months</option>
+              <option value={6}>Last 6 Months</option>
+              <option value={12}>Last 12 Months</option>
+            </select>
           </div>
           <div className="flex-1 min-h-[250px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'Inter' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => `${currency}${val}`} />
-                <Tooltip 
-                  cursor={{ fill: 'var(--surface-container-low)' }}
-                  contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
-                  itemStyle={{ fontFamily: 'JetBrains Mono' }}
-                  formatter={(val: number) => `${currency}${val.toFixed(2)}`}
-                />
-                <Bar dataKey="income" fill="var(--primary)" radius={[2, 2, 0, 0]} />
-                <Bar dataKey="expense" fill="var(--surface-container-highest)" radius={[2, 2, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            {loading ? (
+              <div className="w-full h-full flex items-end gap-2 pb-4">
+                {[...Array(timeframe)].map((_, i) => (
+                  <Skeleton key={i} className="flex-1 h-3/4 rounded-t-md" style={{ height: `${Math.random() * 60 + 20}%` }} />
+                ))}
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'Inter' }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'JetBrains Mono' }} tickFormatter={(val) => `${currency}${val}`} />
+                  <Tooltip 
+                    cursor={{ fill: 'var(--surface-container-low)' }}
+                    contentStyle={{ backgroundColor: 'var(--inverse-surface)', border: 'none', borderRadius: '8px', color: 'var(--inverse-on-surface)' }}
+                    itemStyle={{ fontFamily: 'JetBrains Mono' }}
+                    formatter={(val: number) => `${currency}${val.toFixed(2)}`}
+                  />
+                  <Bar dataKey="income" fill="var(--primary)" radius={[2, 2, 0, 0]} />
+                  <Bar dataKey="expense" fill="var(--surface-container-highest)" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </Card>
 
         <div className="xl:col-span-1 flex flex-col gap-6">
           <Card className="flex flex-col flex-1">
             <h3 className="font-headline-sm text-headline-sm text-on-surface mb-4">Category Breakdown</h3>
-            {categoryData.length > 0 ? (
+            {loading ? (
+              <div className="flex-1 flex items-center justify-center">
+                <Skeleton className="w-48 h-48 rounded-full" />
+              </div>
+            ) : categoryData.length > 0 ? (
               <div className="flex-1">
                 <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                   <PieChart>
@@ -164,8 +242,9 @@ export const Dashboard: React.FC = () => {
           </Card>
         </div>
       </section>
-
-      <section className="mb-6">
+    ),
+    transactions: (
+      <section>
         <Card className="overflow-x-auto">
           <div className="flex justify-between items-center mb-4 min-w-[600px]">
             <h3 className="font-headline-sm text-headline-sm text-on-surface">Recent Transactions</h3>
@@ -181,9 +260,13 @@ export const Dashboard: React.FC = () => {
             </thead>
             <tbody className="font-body-sm text-body-sm text-on-surface">
               {loading && transactions.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="text-center text-on-surface-variant py-4">Loading...</td>
-                </tr>
+                <>
+                  {[...Array(3)].map((_, i) => (
+                    <tr key={i} className="border-b border-surface-container-lowest last:border-0">
+                      <td colSpan={4} className="py-3"><Skeleton className="h-8 w-full" /></td>
+                    </tr>
+                  ))}
+                </>
               ) : transactions.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="text-center text-on-surface-variant py-4">No transactions yet</td>
@@ -208,6 +291,27 @@ export const Dashboard: React.FC = () => {
           </table>
         </Card>
       </section>
+    )
+  };
+
+  return (
+    <div className="space-y-6">
+      <header className="mb-8 flex justify-between items-end">
+        <div>
+          <h2 className="font-headline-lg text-headline-lg text-on-surface">Overview</h2>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Here's your fiscal health at a glance.</p>
+        </div>
+      </header>
+
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={layout} strategy={verticalListSortingStrategy}>
+          {layout.map((id) => (
+            <SortableSection key={id} id={id}>
+              {sections[id]}
+            </SortableSection>
+          ))}
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };

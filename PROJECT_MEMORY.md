@@ -53,12 +53,14 @@ Pundo is a modern, responsive Personal Finance Progressive Web Application (PWA)
 - [x] Supabase client configured.
 - [x] Basic routing set up.
 - [x] Core UI components scaffolded.
-- [ ] Data schema defined in Supabase.
+- [x] Data schema defined in Supabase (Transactions, Goals, Profiles, Login History).
 - [x] PWA manifest and service worker added.
 - [x] Dashboard with Recharts widgets.
 - [x] CRUD operations for transactions.
 - [x] Goal tracking UI.
-- [ ] Responsive design verified (mobile-first).
+- [x] Responsive design verified (mobile-first).
+- [x] Phase 8: Settings, Profile Picture uploads, Localization (i18n), Password Verification.
+- [x] Phase 9: Micro-animations, Skeleton loaders, Glassmorphism, Drag & Drop Dashboard, Interactive charts.
 
 *This file will be updated at the start and end of each interaction to keep project context consistent.*
 

@@ -9,6 +9,7 @@ export interface Profile {
   currency: string;
   email_notifications: boolean;
   avatar_url?: string | null;
+  dashboard_layout?: any[];
 }
 
 interface ProfileState {

@@ -8,6 +8,7 @@ import { AddFundsForm } from '../components/goals/AddFundsForm';
 import { useGoalStore } from '../store/goalStore';
 import { useProfileStore } from '../store/profileStore';
 import { ProgressBar } from '../components/ui/ProgressBar';
+import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
 
 export const Goals: React.FC = () => {
@@ -47,11 +48,12 @@ export const Goals: React.FC = () => {
         </Button>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {loading && goals.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-on-surface-variant font-label-md">
-            Loading goals...
-          </div>
+          <>
+            <Card><Skeleton className="h-40 w-full" /></Card>
+            <Card><Skeleton className="h-40 w-full" /></Card>
+          </>
         ) : goals.length === 0 ? (
           <div className="col-span-full py-12 text-center text-on-surface-variant font-label-md">
             No goals found. Create one to start saving!

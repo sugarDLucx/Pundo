@@ -1,14 +1,16 @@
-# Pundo Wealth Manager
+# Pundo Wealth Manager (v1.1.0)
 
 Pundo is a comprehensive, modern personal finance and wealth management dashboard built to help you track expenses, set savings goals, and manage your financial health effortlessly.
 
 ## 🚀 Features
 
-- **Dashboard Overview:** Get a quick glance at your total balance, monthly income, expenses, and a breakdown of your spending categories through dynamic charts.
-- **Transactions Management:** Log and monitor your income and expenses with detailed categorization and clear visual status indicators.
-- **Goal Tracking:** Set financial goals, track progress with dynamic progress bars, and automatically link fund additions to expense records.
-- **Material Design 3 UI:** A fully responsive, modern interface featuring a curated color palette, beautiful typography (Inter & JetBrains Mono), and micro-animations.
-- **Dark Mode Support:** Seamlessly toggle between Light and Dark modes from the Settings panel.
+- **Customizable Dashboard:** Drag and drop dashboard widgets (Overview, Charts, Transactions) that save securely to your profile.
+- **Interactive Charting:** Dynamic charts with timeframe toggles (3, 6, 12 months) and custom hover tooltips.
+- **Global Localization (i18n):** Instantly switch between English, Spanish, and French.
+- **Transactions & Goal Management:** Log income and expenses, set savings targets, and automatically track your progress.
+- **Material Design 3 UI & Animations:** Beautifully crafted interface featuring Glassmorphism, Framer Motion page transitions, micro-animations, and animated Skeleton loaders.
+- **Advanced Profiles:** Support for custom profile picture uploads (via Supabase Storage) and strict password change verification.
+- **Dark Mode Support:** Seamlessly toggle between Light and Dark modes.
 - **Progressive Web App (PWA):** Installable on mobile and desktop for offline capabilities and a native app experience.
 
 ## 🛠️ Technology Stack

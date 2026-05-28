@@ -4,8 +4,9 @@ import { LogOut, Menu, X } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { useProfileStore } from '../../store/profileStore';
 import { Icon } from '../ui/Icon';
-import { cn } from '../../lib/utils';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '../../lib/utils';
 
 export const AppLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,7 +31,7 @@ export const AppLayout: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-background text-on-surface font-body-md antialiased">
       {/* Sidebar */}
-      <aside className="hidden w-64 flex-col border-r border-surface-container-low bg-surface shadow-sm fixed left-0 top-0 h-screen z-20 md:flex">
+      <aside className="hidden w-64 flex-col border-r border-surface-container-low bg-surface/80 backdrop-blur-xl shadow-sm fixed left-0 top-0 h-screen z-20 md:flex">
         <div className="flex flex-col h-full py-6 px-4">
           <div className="flex items-center space-x-3 px-4 mb-10">
             <div className="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary overflow-hidden shrink-0">
@@ -81,7 +82,7 @@ export const AppLayout: React.FC = () => {
       </aside>
 
       {/* Mobile Navigation */}
-      <nav className="md:hidden w-full h-16 sticky top-0 z-40 bg-surface shadow-sm flex justify-between items-center px-4 border-b border-surface-container-low">
+      <nav className="md:hidden w-full h-16 sticky top-0 z-40 bg-surface/80 backdrop-blur-xl shadow-sm flex justify-between items-center px-4 border-b border-surface-container-low">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 rounded-lg bg-primary-container overflow-hidden shrink-0 flex items-center justify-center text-primary">
             {profile?.avatar_url ? (
@@ -99,13 +100,22 @@ export const AppLayout: React.FC = () => {
         </button>
       </nav>
 
-      {/* Mobile Header */}
+      {/* Mobile Header (Hidden as we now use Mobile Navigation) */}
       <div className="flex flex-1 flex-col overflow-hidden md:ml-64">
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-8">
-          <div className="mx-auto max-w-container-max">
-            <Outlet />
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={location.pathname}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="mx-auto max-w-container-max"
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
     </div>
