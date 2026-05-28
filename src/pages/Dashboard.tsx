@@ -220,16 +220,16 @@ export const Dashboard: React.FC = () => {
                 <Skeleton className="w-48 h-48 rounded-full" />
               </div>
             ) : categoryData.length > 0 ? (
-              <div className="flex-1 w-full min-h-[250px] flex items-center justify-between px-2 sm:px-4">
-                <div className="w-[50%] h-full relative -ml-4">
-                  <ResponsiveContainer width="100%" height={250}>
+              <div className="flex-1 w-full flex flex-col items-center justify-center gap-6 py-4 px-2 sm:px-4">
+                <div className="w-full h-[180px] relative">
+                  <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
                         data={categoryData}
                         cx="50%"
                         cy="50%"
-                        innerRadius={55}
-                        outerRadius={75}
+                        innerRadius={60}
+                        outerRadius={80}
                         paddingAngle={5}
                         dataKey="value"
                         stroke="none"
@@ -246,13 +246,13 @@ export const Dashboard: React.FC = () => {
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="font-data-mono font-bold text-lg text-on-surface">100%</span>
+                    <span className="font-data-mono font-bold text-xl text-on-surface">100%</span>
                   </div>
                 </div>
-                <div className="w-[50%] flex flex-col gap-3 justify-center pl-2 sm:pl-4 border-l border-surface-container-low">
+                <div className="w-full flex flex-col gap-3">
                   {categoryData.slice(0, 5).map((entry, index) => (
-                    <div key={index} className="flex items-center justify-between gap-1">
-                      <div className="flex items-center gap-2 overflow-hidden">
+                    <div key={index} className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-3 overflow-hidden">
                         <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }} />
                         <span className="font-label-md text-on-surface-variant truncate" title={entry.name}>{entry.name}</span>
                       </div>
